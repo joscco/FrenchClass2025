@@ -1,0 +1,84 @@
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { FlashcardComponent } from '../flashcard/flashcard.component';
+import { PracticeMode } from '../mode-selector/mode-selector.component';
+
+export interface PracticeCard {
+  id: number | string;
+  frontPrimary: string;
+  frontSecondary?: string;
+  backPrimary: string;
+  backSecondary?: string;
+  meta?: { category?: string; genus?: string; lesson?: number };
+}
+
+@Component({
+  selector: 'app-practice',
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, FlashcardComponent],
+  templateUrl: './practice.component.html'
+})
+export class PracticeComponent implements OnChanges {
+  @Input() cards: PracticeCard[] = [];
+  @Input() mode: PracticeMode = 'fr-de';
+
+  @ViewChild('fc') flashcard?: FlashcardComponent;
+
+  index = signal(0);
+  shuffled = signal<PracticeCard[]>([]);
+  oriented = signal<PracticeCard[]>([]);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cards'] || changes['mode']) {
+      this.prepare();
+    }
+  }
+
+  prepare() {
+    // Shuffle stabil, dann Orientierung je nach Modus
+    const arr = [...this.cards];
+    this.shuffleInPlace(arr);
+    this.shuffled.set(arr);
+
+    const oriented = arr.map(c => this.orientCard(c, this.mode));
+    this.oriented.set(oriented);
+    this.index.set(0);
+    this.flashcard?.reset();
+  }
+
+  current(): PracticeCard {
+    const a = this.oriented();
+    const i = this.index();
+    return a[Math.min(Math.max(0, i), Math.max(0, a.length - 1))] ?? {
+      id: 'empty', frontPrimary: '', backPrimary: ''
+    };
+  }
+
+  prev() { this.index.update(i => Math.max(0, i - 1)); this.flashcard?.reset(); }
+  next() { this.index.update(i => Math.min(this.oriented().length - 1, i + 1)); this.flashcard?.reset(); }
+
+  private orientCard(card: PracticeCard, mode: PracticeMode): PracticeCard {
+    if (mode === 'fr-de') return card;
+    if (mode === 'de-fr') {
+      return {
+        ...card,
+        frontPrimary: card.backPrimary,
+        frontSecondary: card.backSecondary,
+        backPrimary: card.frontPrimary,
+        backSecondary: card.frontSecondary
+      };
+    }
+    // mixed: 50/50 zufällig
+    const frFirst = Math.random() < 0.5;
+    return frFirst ? card : this.orientCard(card, 'de-fr');
+  }
+
+  private shuffleInPlace<T>(a: T[]) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+  }
+}
+

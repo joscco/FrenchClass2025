@@ -1,0 +1,9 @@
+<mat-button-toggle-group
+  [value]="mode"
+  (change)="modeChange.emit($event.value)"
+  appearance="legacy">
+  <mat-button-toggle value="fr-de" matTooltip="Französisch → Deutsch">FR→DE</mat-button-toggle>
+  <mat-button-toggle value="de-fr" matTooltip="Deutsch → Französisch">DE→FR</mat-button-toggle>
+  <mat-button-toggle value="mixed" matTooltip="Gemischt">Mixed</mat-button-toggle>
+</mat-button-toggle-group>
+

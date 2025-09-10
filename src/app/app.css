@@ -1,0 +1,4 @@
+.app { max-width: 960px; margin: 0 auto; padding: 16px; }
+header { display: grid; gap: 12px; align-items: center; }
+.controls { display: flex; gap: 12px; flex-wrap: wrap; }
+main { margin-top: 16px; }

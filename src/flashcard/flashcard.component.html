@@ -1,0 +1,26 @@
+<mat-card style="perspective:1200px; user-select:none;" class="relative overflow-visible">
+  <div
+    class="transition-transform duration-500 will-change-transform min-h-[180px] p-4 grid place-content-center"
+    [style.transform]="flipped() ? 'rotateY(180deg)' : 'none'"
+    style="transform-style: preserve-3d;"
+    (click)="toggle()">
+
+    <div class="absolute inset-0 grid place-content-center gap-2 p-4" style="backface-visibility: hidden;">
+      <div class="text-xl font-semibold">{{ frontPrimary }}</div>
+      <div class="opacity-80" *ngIf="frontSecondary">{{ frontSecondary }}</div>
+    </div>
+
+    <div class="absolute inset-0 grid place-content-center gap-2 p-4" style="backface-visibility: hidden; transform: rotateY(180deg);">
+      <div class="text-xl font-semibold">{{ backPrimary }}</div>
+      <div class="opacity-80" *ngIf="backSecondary">{{ backSecondary }}</div>
+    </div>
+  </div>
+
+  <mat-card-actions>
+    <button mat-button (click)="toggle(); $event.stopPropagation()">
+      <mat-icon>flip</mat-icon>
+      <span class="ml-2">Flip</span>
+    </button>
+  </mat-card-actions>
+</mat-card>
+

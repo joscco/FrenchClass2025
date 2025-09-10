@@ -1,0 +1,20 @@
+<section *ngIf="cards?.length; else empty">
+  <div class="flex items-center justify-center gap-3 mb-3">
+    <button mat-stroked-button (click)="prev()">Zurück</button>
+    <div class="min-w-[80px] text-center font-semibold">{{ index()+1 }} / {{ shuffled().length }}</div>
+    <button mat-stroked-button (click)="next()">Weiter</button>
+  </div>
+
+  <app-flashcard
+    #fc
+    [frontPrimary]="current().frontPrimary"
+    [frontSecondary]="current().frontSecondary || ''"
+    [backPrimary]="current().backPrimary"
+    [backSecondary]="current().backSecondary || ''"
+  />
+</section>
+
+<ng-template #empty>
+  <p>Keine Karten in dieser Auswahl.</p>
+</ng-template>
+
