@@ -12,8 +12,11 @@ export type LessonOption = 'Alle' | `Lektion ${number}`;
   templateUrl: './lesson-selector.component.html'
 })
 export class LessonSelectorComponent {
-  @Input() lessons: LessonOption[] = ['Alle'];
-  @Input() selected: LessonOption = 'Alle';
-  @Output() selectedChange = new EventEmitter<LessonOption>();
+  @Input()
+  public lessons: LessonOption[] = ['Alle'];
+  @Input()
+  public selected: LessonOption = 'Alle';
+  @Output()
+  public selectedChange = new EventEmitter<LessonOption>();
 }
 

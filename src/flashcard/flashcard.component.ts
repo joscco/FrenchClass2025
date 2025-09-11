@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './flashcard.component.html'
 })
 export class FlashcardComponent {
+  @Input() meta: Record<string, any> = {};
   @Input() frontPrimary = '';
   @Input() frontSecondary = '';
   @Input() backPrimary = '';
@@ -22,4 +23,3 @@ export class FlashcardComponent {
   // Hilfs-API: von außen zurücksetzen
   reset() { this.flipped.set(false); }
 }
-

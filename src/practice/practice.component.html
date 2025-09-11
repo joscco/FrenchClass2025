@@ -7,6 +7,7 @@
 
   <app-flashcard
     #fc
+    [meta]="current().meta || {}"
     [frontPrimary]="current().frontPrimary"
     [frontSecondary]="current().frontSecondary || ''"
     [backPrimary]="current().backPrimary"

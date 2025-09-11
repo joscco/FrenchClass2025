@@ -1,0 +1,6 @@
+.flashcard-stage { position: relative; min-height: 180px; padding: 1rem; }
+.face { position: absolute; inset: 0; display: grid; place-content: center; gap: .5rem; padding: 1rem; opacity: 1; transform: translateX(0); transition: opacity .35s ease, transform .35s ease; }
+.face.back { opacity: 0; transform: translateX(25%); pointer-events: none; }
+.flipped .face.front { opacity: 0; transform: translateX(-25%); pointer-events: none; }
+.flipped .face.back { opacity: 1; transform: translateX(0); pointer-events: auto; }
+

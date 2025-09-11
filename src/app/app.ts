@@ -19,8 +19,7 @@ export interface VocabRow {
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, LessonSelectorComponent, ModeSelectorComponent, PracticeComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.html'
 })
 export class AppComponent {
   // Dummy-Lektionen (aus deiner Struktur "date" als Lektionsnummer)

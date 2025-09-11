@@ -1,26 +1,29 @@
-<mat-card style="perspective:1200px; user-select:none;" class="relative overflow-visible">
-  <div
-    class="transition-transform duration-500 will-change-transform min-h-[180px] p-4 grid place-content-center"
-    [style.transform]="flipped() ? 'rotateY(180deg)' : 'none'"
-    style="transform-style: preserve-3d;"
-    (click)="toggle()">
-
-    <div class="absolute inset-0 grid place-content-center gap-2 p-4" style="backface-visibility: hidden;">
-      <div class="text-xl font-semibold">{{ frontPrimary }}</div>
-      <div class="opacity-80" *ngIf="frontSecondary">{{ frontSecondary }}</div>
+<mat-card class="relative overflow-hidden">
+  <mat-card-header class="italic opacity-50">
+    <div *ngIf="meta && meta['category']">{{ meta['category'] }}</div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="relative min-w-[400px] min-h-[180px] p-4 cursor-pointer select-none" (click)="toggle()">
+      <!-- Front -->
+      <div class="absolute inset-0 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
+           [class.opacity-100]="!flipped()"
+           [class.opacity-0]="flipped()"  [class.pointer-events-none]="flipped()">
+        <div class="text-xl font-semibold">{{ frontPrimary }}</div>
+        <div *ngIf="frontSecondary">{{ frontSecondary }}</div>
+      </div>
+      <!-- Back -->
+      <div class="absolute inset-0 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
+           [class.opacity-0]="!flipped()" [class.pointer-events-none]="!flipped()"
+           [class.opacity-100]="flipped()" >
+        <div class="text-xl font-semibold">{{ backPrimary }}</div>
+        <div *ngIf="backSecondary">{{ backSecondary }}</div>
+      </div>
     </div>
-
-    <div class="absolute inset-0 grid place-content-center gap-2 p-4" style="backface-visibility: hidden; transform: rotateY(180deg);">
-      <div class="text-xl font-semibold">{{ backPrimary }}</div>
-      <div class="opacity-80" *ngIf="backSecondary">{{ backSecondary }}</div>
-    </div>
-  </div>
-
-  <mat-card-actions>
-    <button mat-button (click)="toggle(); $event.stopPropagation()">
-      <mat-icon>flip</mat-icon>
-      <span class="ml-2">Flip</span>
-    </button>
-  </mat-card-actions>
+  </mat-card-content>
 </mat-card>
-
+<mat-card-actions>
+  <button mat-button (click)="toggle(); $event.stopPropagation()" class="transition-colors">
+    <mat-icon>swap_horiz</mat-icon>
+    <span class="ml-2">Flip</span>
+  </button>
+</mat-card-actions>

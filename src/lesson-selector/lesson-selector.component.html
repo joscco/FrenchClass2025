@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline">
+<mat-form-field>
   <mat-label>Lektion</mat-label>
   <mat-select [value]="selected" (selectionChange)="selectedChange.emit($event.value)">
     <mat-option *ngFor="let l of lessons" [value]="l">{{ l }}</mat-option>

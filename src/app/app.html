@@ -1,7 +1,7 @@
-<div class="app">
-  <header>
+<div class="w-full max-w-[960px] flex flex-col items-center justify-center p-4">
+  <header class="grid gap-3 items-center">
     <h1>Vokabeltrainer</h1>
-    <div class="controls">
+    <div class="controls flex flex-wrap gap-3">
       <app-lesson-selector
         [lessons]="lessons()"
         [selected]="selectedLessons()"
@@ -14,7 +14,7 @@
     </div>
   </header>
 
-  <main>
+  <main class="mt-4">
     <app-practice
       [cards]="practiceCards()"
       [mode]="mode()"
