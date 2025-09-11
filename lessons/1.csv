@@ -1,0 +1,113 @@
+﻿id;category;genus;fr_word;fr_sentence;de_word;de_sentence
+1;verb;;s'inscrire;Je vais m'inscrire à un cours de français.;sich anmelden;Ich melde mich zu einem Französischkurs an.
+2;noun;f.;une manifestation;Il y avait une manifestation dans la rue principale.;eine Demonstration;In der Hauptstraße gab es eine Demo.
+3;verb;;désinfecter;Il faut désinfecter la plaie.;desinfizieren;Man muss die Wunde desinfizieren.
+4;noun;m.;le frigidaire;Le frigidaire est plein de légumes.;der Kühlschrank;Der Kühlschrank ist voller Gemüse.
+5;noun;m.;le camping;Nous faisons du camping près du lac.;Camping;Wir machen Camping am See.
+6;noun;m.;le sac de couchage;J’ai oublié mon sac de couchage.;der Schlafsack;Ich habe meinen Schlafsack vergessen.
+7;adjective;;viticole;C’est une région viticole.;weinbau-;Das ist eine Weinbauregion.
+8;verb;;faire des randonnées;Nous aimons faire des randonnées en montagne.;wandern;Wir gehen gern in den Bergen wandern.
+9;verb;;randonner;On peut randonner dans le parc naturel.;wandern;Man kann im Naturpark wandern.
+10;noun;m.;le dénivelé;Au cours de leur randonnée, ils ont parcouru un bon nombre de mètres de dénivelé.;der Höhenunterschied;Während ihrer Wanderung haben sie ordentlich Höhenmeter gemacht.
+11;noun;f.;une chapelle;Nous avons visité une petite chapelle.;eine Kapelle;Wir haben eine kleine Kapelle besichtigt.
+12;expression;;en Bavière;J’habite en Bavière.;in Bayern;Ich wohne in Bayern.
+13;noun;f.;une station thermale;Cette ville est une station thermale célèbre.;ein Kurort;Diese Stadt ist ein bekannter Kurort.
+14;verb;;aller en cure;Ma grand-mère est allée en cure.;zur Kur fahren;Meine Oma ist zur Kur gefahren.
+15;adjective;;crevant;Le voyage était crevant.;erschöpfend;Die Reise war anstrengend/erschöpfend.
+16;adjective;;fatiguant;C’est un travail très fatiguant.;ermüdend;Das ist eine sehr ermüdende Arbeit.
+17;adjective;;dur;L’examen était très dur.;schwer, hart;Die Prüfung war sehr schwer.
+18;noun;m.;le rôle;Il a joué un rôle important.;die Rolle;Er hat eine wichtige Rolle gespielt.
+19;adjective;;dégoûtant;Ce repas est dégoûtant.;ekelhaft;Dieses Essen ist ekelhaft.
+20;noun;f.;une colline;La maison est sur une colline.;ein Hügel;Das Haus liegt auf einem Hügel.
+21;noun;f.;une sacoche;Il porte une sacoche en cuir.;eine Umhängetasche;Er trägt eine Ledertasche.
+22;noun;mpl.;les bagages (m.pl.);J’ai perdu mes bagages à l’aéroport.;das Gepäck;Ich habe mein Gepäck am Flughafen verloren.
+23;verb;;pousser (un vélo);Il a dû pousser son vélo en montée.;ein Fahrrad schieben;Er musste sein Rad bergauf schieben.
+24;verb;;rouler;La voiture roule vite.;fahren, rollen;Das Auto fährt schnell.
+25;noun;m.;le frein;Le frein de mon vélo ne marche pas.;die Bremse;Meine Fahrradbremse funktioniert nicht.
+26;noun;m.;un casque;Il faut porter un casque à vélo.;ein Helm;Beim Radfahren muss man einen Helm tragen.
+27;noun;f.;une casquette;Il porte une casquette bleue.;eine Kappe;Er trägt eine blaue Kappe.
+28;adjective;;lourd;Ce sac est très lourd.;schwer;Diese Tasche ist sehr schwer.
+29;adjective;;léger;Ce tissu est très léger.;leicht;Dieser Stoff ist sehr leicht.
+30;noun;f.;une borne;Nous avons trouvé une borne kilométrique.;ein Kilometerstein;Wir haben einen Kilometerstein gefunden.
+31;noun;m.;un aménagement;Les aménagements du parc sont modernes.;eine Anlage, ein Ausbau;Die Anlagen des Parks sind modern.
+32;noun;m.;l’estuaire (m.);L’estuaire de la Loire est magnifique.;die Mündung;Die Mündung der Loire ist wunderschön.
+33;expression;;en Grèce;Je vais en Grèce cet été.;in Griechenland;Ich fahre diesen Sommer nach Griechenland.
+34;adjective;;grec/grecque;Elle est grecque.;griechisch;Sie ist Griechin.
+35;noun;f.;la mer Baltique;Nous passons nos vacances à la mer Baltique.;die Ostsee;Wir machen Urlaub an der Ostsee.
+36;expression;;être en rénovation;Le musée est en rénovation.;renoviert werden;Das Museum wird gerade renoviert.
+37;noun;f.;la marzipan (pâte);La pâte de marzipan est sucrée.;das Marzipan;Marzipanmasse ist süß.
+38;noun;m.;un camping-car;Ils voyagent en camping-car.;ein Wohnmobil;Sie reisen mit dem Wohnmobil.
+39;adjective;;surpeuplé;La plage était surpeuplée.;überfüllt;Der Strand war überfüllt.
+40;expression;;sur la côte;Nous avons une maison sur la côte.;an der Küste;Wir haben ein Haus an der Küste.
+41;expression;;aller en avion;Nous allons en avion à Paris.;mit dem Flugzeug fliegen;Wir fliegen nach Paris.
+42;expression;;dans le centre;L’hôtel est dans le centre-ville.;im Zentrum;Das Hotel ist im Stadtzentrum.
+43;noun;m.;l'enquêteur (m.);L’enquêteur cherche des indices.;der Ermittler;Der Ermittler sucht nach Hinweisen.
+44;noun;m.;le désert;Le Sahara est un grand désert.;die Wüste;Die Sahara ist eine große Wüste.
+45;noun;m.;le vol;Le vol de l’avion a été retardé.;die Flug, Diebstahl;Der Flug wurde verspätet.
+46;noun;;une exposition;Il y a une exposition de peinture au musée.;eine Ausstellung;Es gibt eine Kunstausstellung im Museum.
+47;noun;m.;un tableau;Ce tableau est de Picasso.;ein Gemälde, Tafel;Dieses Bild ist von Picasso.
+48;adjective;;scandinave;J’aime le design scandinave.;skandinavisch;Ich mag skandinavisches Design.
+49;noun;m.;le parquet;Le parquet est en chêne.;das Parkett;Das Parkett ist aus Eiche.
+50;noun;m.;le stratifié;Le sol est en stratifié.;das Laminat;Der Boden ist aus Laminat.
+51;noun;m.;le chêne;Cette table est en chêne.;die Eiche;Der Tisch ist aus Eiche.
+52;noun;m.;l’aulne (m.);L’aulne pousse près des rivières.;die Erle;Erlen wachsen oft an Flüssen.
+53;noun;m.;le hêtre;Le hêtre est un bois dur.;die Buche;Buche ist ein Hartholz.
+54;noun;m.;le pin;Le pin est un arbre résineux.;Kiefer;Die Kiefer ist ein Nadelbaum.
+55;noun;m.;l’érable (m.);L’érable donne du sirop.;Ahorn;Aus dem Ahorn gewinnt man Sirup.
+56;noun;m.;l’épicéa (m.);L’épicéa est un arbre commun en Europe.;Fichte;Die Fichte ist ein häufiger Baum in Europa.
+57;noun;m.;le pin parasol;Le pin parasol pousse au sud.;Pinie;Die Pinie wächst im Süden.
+58;noun;m.;le bouleau;Le bouleau a une écorce blanche.;Birke;Die Birke hat weiße Rinde.
+59;noun;m.;le cerisier;Le cerisier fleurit au printemps.;Kirschbaum;Der Kirschbaum blüht im Frühling.
+60;noun;m.;le bois de cerisier;Cette armoire est en bois de cerisier.;Kirschholz;Dieser Schrank ist aus Kirschholz.
+61;noun;m.;un mélange;C’est un mélange de couleurs.;Mischung;Das ist eine Farbmischung.
+62;noun;m.;un marché aux puces;J’ai acheté un vase au marché aux puces.;Flohmarkt;Ich habe eine Vase auf dem Flohmarkt gekauft.
+63;noun;f.;la vaisselle;La vaisselle est propre.;Geschirr;Das Geschirr ist sauber.
+64;noun;f.;la marque;Quelle est la marque de cette voiture ?;Marke;Welche Marke hat dieses Auto?
+65;adjective;;bon marché;Ces chaussures sont bon marché.;billig;Diese Schuhe sind billig.
+66;adjective;;meilleur marché;C’est meilleur marché que chez eux.;günstiger;Das ist günstiger als bei ihnen.
+67;noun;f.;la TVA;La TVA en France est de 20 %.;Mehrwertsteuer;Die MwSt. in Frankreich beträgt 20 %.
+68;noun;f.;une pancarte;Il y avait une pancarte devant la boutique.;Schild, Plakat;Vor dem Laden hing ein Schild.
+69;noun;f.;une brocante;J’ai trouvé une vieille lampe à la brocante.;ein Trödelmarkt, Antiquitätenmarkt;Ich habe eine alte Lampe auf dem Flohmarkt gefunden.
+70;noun;f.;une vide-greniers;Le village organise un vide-greniers dimanche.;ein Dachbodenflohmarkt;Das Dorf organisiert am Sonntag einen Flohmarkt.
+71;expression;;dès que;Dès que j’arrive, je t’appelle.;sobald;Sobald ich ankomme, rufe ich dich an.
+72;expression;;son regard s’illumine;Son regard s’illumine quand il parle de musique.;sein Blick hellt sich auf;Sein Blick hellt sich auf, wenn er über Musik spricht.
+73;sentence;;;Ses yeux brillent de joie.;;Seine Augen glänzen vor Freude.
+74;adjective;;fiévreusement;Elle écrit fiévreusement dans son carnet.;fieberhaft;Sie schreibt fieberhaft in ihr Notizbuch.
+75;adjective;;lointain;C’est un souvenir lointain de mon enfance.;fern, entfernt;Das ist eine ferne Erinnerung aus meiner Kindheit.
+76;noun;f.;une trouvaille;Cette chaise est une belle trouvaille.;ein Fundstück;Dieser Stuhl ist ein schönes Fundstück.
+77;expression;;faire la route;Nous allons faire la route ensemble.;die Strecke zurücklegen;Wir werden die Strecke gemeinsam fahren.
+78;expression;;avant même que + subj.;Ils partent avant même que le soleil ne se lève.;noch bevor + verb;Sie brechen auf, noch bevor die Sonne aufgeht.
+79;noun;m.;un cabas en toile;Elle apporte toujours un cabas en toile au marché.;eine Stofftragetasche;Sie bringt immer eine Stofftasche mit zum Markt.
+80;noun;m.;un thermos;J’ai pris un thermos de café.;eine Thermoskanne;Ich habe eine Thermoskanne Kaffee mitgenommen.
+81;noun;m.;un billet;Il a payé avec un billet de 20 euros.;ein Geldschein;Er hat mit einem 20-Euro-Schein bezahlt.
+82;noun;m.;un lieu d’achat;Le reçu indique le lieu d’achat.;ein Kaufort;Der Kassenzettel zeigt den Kaufort.
+83;noun;f.;la périphérie;Ils habitent à la périphérie de la ville.;der Stadtrand;Sie wohnen am Stadtrand.
+84;noun;m.;un phénomène;Le marché est devenu un vrai phénomène culturel.;ein Phänomen;Der Markt ist zu einem echten kulturellen Phänomen geworden.
+85;verb;;se répandre;La nouvelle s’est rapidement répandue.;sich verbreiten;Die Nachricht hat sich schnell verbreitet.
+86;expression;;milliers;Des milliers de personnes visitent le marché.;Tausende;Tausende Menschen besuchen den Markt.
+87;noun;m.;un coin;Nous nous retrouvons dans un coin tranquille.;eine Ecke;Wir treffen uns in einer ruhigen Ecke.
+88;verb;;chuchoter;Les enfants chuchotent dans la bibliothèque.;flüstern;Die Kinder flüstern in der Bibliothek.
+89;verb;;ébrécher;J’ai une assiette ébréchée.;an einer Kante angeschlagen;Ich habe einen Teller mit einer abgesprungenen Ecke.
+90;verb;;évoquer;Il évoque souvent ses voyages.;erwähnen, ins Gedächtnis rufen;Er erwähnt oft seine Reisen.
+91;noun;f.;une âme;Cette maison a une âme.;eine Seele;Dieses Haus hat eine Seele.
+92;noun;f.;une horloge;L’horloge sonne midi.;eine Uhr;Die Uhr schlägt zwölf.
+93;verb;;patiner;La peinture commence à patiner avec le temps.;Patina ansetzen;Die Farbe bekommt mit der Zeit Patina.
+94;expression;;apporter du caractère;Ce détail apporte du caractère à la pièce.;Charakter verleihen;Dieses Detail verleiht dem Raum Charakter.
+95;verb;;plaisanter;On plaisante toujours avec lui.;scherzen;Mit ihm scherzt man immer.
+96;expression;;avec ferveur;Elle négocie avec ferveur sur le marché.;leidenschaftlich;Sie handelt leidenschaftlich auf dem Markt.
+97;sentence;;;Les vendeurs partagent volontiers des anecdotes sur leurs trésors.;;Die Verkäufer erzählen gerne Anekdoten über ihre Schätze.
+98;noun;f.;la convivialité;La convivialité est au cœur de cet événement.;die Geselligkeit;Die Geselligkeit steht im Mittelpunkt dieser Veranstaltung.
+99;sentence;;;Le temps semble suspendu au fil des conversations.;;Die Zeit scheint während der Gespräche stillzustehen.
+100;noun;m.;le frisson;J’ai ressenti un frisson de joie.;das Kribbeln;Ich habe einen Freudenschauer gespürt.
+101;noun;m.;le rotin;Elle s’assoit sur une chaise en rotin.;das Rattan;Sie setzt sich auf einen Rattanstuhl.
+102;expression;;malgré moi;J’ai souri malgré moi.;unwillkürlich;Ich habe unwillkürlich gelächelt.
+103;expression;;une passion m’a gagnée;Peu à peu, une passion m’a gagnée.;eine Leidenschaft hat mich gepackt;Nach und nach hat mich eine Leidenschaft ergriffen.
+104;adjective;;rayonnante;Elle est rayonnante de bonheur.;strahlend;Sie ist vor Glück strahlend.
+105;expression;;céder à une tentation;Il a cédé à la tentation d’acheter ce tableau.;einer Versuchung nachgeben;Er ist der Versuchung erlegen, das Bild zu kaufen.
+106;adjective;;embrumé;Le paysage est embrumé ce matin.;neblig, benebelt;Die Landschaft ist heute Morgen neblig.
+107;noun;m.;un portefeuille;J’ai perdu mon portefeuille.;eine Brieftasche;Ich habe meine Brieftasche verloren.
+108;noun;f.;une coupure;Il a payé en petites coupures.;ein Geldschein;Er hat mit kleinen Scheinen bezahlt.
+109;verb;;arpenter;Ils arpentent les allées du marché.;durchschreiten;Sie schlendern durch die Gänge des Marktes.
+110;adjective;;insolite;C’est un objet insolite.;ungewöhnlich;Das ist ein ungewöhnlicher Gegenstand.
+111;verb;;rapporter;J’ai rapporté un souvenir de Paris.;mitbringen, berichten;Ich habe ein Souvenir aus Paris mitgebracht.
+112;noun;f.;la magie;On sent la magie du lieu.;die Magie;Man spürt die Magie des Ortes.
