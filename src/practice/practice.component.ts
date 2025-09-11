@@ -1,7 +1,7 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { PracticeMode } from '../mode-selector/mode-selector.component';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, signal, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {PracticeMode} from '../mode-selector/mode-selector.component';
 import {FlashcardContainerComponent} from '../flashcard-container/flashcard-container.component';
 
 export interface PracticeCard {
@@ -21,16 +21,20 @@ export interface PracticeCard {
   imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent],
   templateUrl: './practice.component.html'
 })
-export class PracticeComponent implements OnChanges {
+export class PracticeComponent implements OnInit, OnChanges {
   @Input() cards: PracticeCard[] = [];
   @Input() mode: PracticeMode = 'fr-de';
 
   @ViewChild('fc') flashcard?: FlashcardContainerComponent;
 
   index = signal(0);
-  shuffled = signal<PracticeCard[]>([]);
   oriented = signal<PracticeCard[]>([]);
   navDirection = signal<'next' | 'prev'>('next');
+
+  ngOnInit() {
+    this.index.set(0);
+    this.prepare();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cards'] || changes['mode']) {
@@ -39,14 +43,9 @@ export class PracticeComponent implements OnChanges {
   }
 
   prepare() {
-    // Shuffle stabil, dann Orientierung je nach Modus
     const arr = [...this.cards];
-    this.shuffleInPlace(arr);
-    this.shuffled.set(arr);
-
     const oriented = arr.map(c => this.orientCard(c, this.mode));
     this.oriented.set(oriented);
-    this.index.set(0);
     this.flashcard?.reset();
   }
 
@@ -63,6 +62,7 @@ export class PracticeComponent implements OnChanges {
     this.index.update(i => Math.max(0, i - 1));
     this.flashcard?.reset();
   }
+
   next() {
     this.navDirection.set('next');
     this.index.update(i => Math.min(this.oriented().length - 1, i + 1));
@@ -70,20 +70,29 @@ export class PracticeComponent implements OnChanges {
   }
 
   private orientCard(card: PracticeCard, mode: PracticeMode): PracticeCard {
-    const base: PracticeCard = { ...card, frontLang: 'fr', backLang: 'de' };
+    const base: PracticeCard = {...card, frontLang: 'fr', backLang: 'de'};
     if (mode === 'fr-de') return base;
     if (mode === 'de-fr') {
-      return { ...card, frontPrimary: card.backPrimary, frontSecondary: card.backSecondary, backPrimary: card.frontPrimary, backSecondary: card.frontSecondary, frontLang: 'de', backLang: 'fr' };
+      return {
+        ...card,
+        frontPrimary: card.backPrimary,
+        frontSecondary: card.backSecondary,
+        backPrimary: card.frontPrimary,
+        backSecondary: card.frontSecondary,
+        frontLang: 'de',
+        backLang: 'fr'
+      };
     }
     // mixed
     const frFirst = Math.random() < 0.5;
-    return frFirst ? base : { ...card, frontPrimary: card.backPrimary, frontSecondary: card.backSecondary, backPrimary: card.frontPrimary, backSecondary: card.frontSecondary, frontLang: 'de', backLang: 'fr' };
-  }
-
-  private shuffleInPlace<T>(a: T[]) {
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
+    return frFirst ? base : {
+      ...card,
+      frontPrimary: card.backPrimary,
+      frontSecondary: card.backSecondary,
+      backPrimary: card.frontPrimary,
+      backSecondary: card.frontSecondary,
+      frontLang: 'de',
+      backLang: 'fr'
+    };
   }
 }

@@ -27,7 +27,7 @@ export class VocabService {
       const all: VocabRow[] = [];
       for (const file of files) {
         try {
-          const lessonNumber = parseInt(file.replace(/[^0-9]/g,''), 10) || 0;
+          const lessonNumber = parseInt(file.replace(/[^0-9]/g, ''), 10) || 0;
           const res = await fetch(`./lessons/${file}`);
           if (!res.ok) throw new Error(`Fehler beim Laden ${file}`);
           const text = await res.text();
@@ -61,32 +61,35 @@ export class VocabService {
 }
 
 // Parser für Semikolon-getrennte CSV mit Quotes ("...") und doppelten Quotes zum Escapen
-function parseCSV(input: string): Record<string,string>[] {
+function parseCSV(input: string): Record<string, string>[] {
   input = input.replace(/^\uFEFF/, '').trim();
   if (!input) return [];
-  const lines = input.split(/\r?\n/).filter(l => l.trim().length>0);
+  const lines = input.split(/\r?\n/).filter(l => l.trim().length > 0);
   if (lines.length === 0) return [];
   const header = splitCSVLine(lines[0]);
-  const out: Record<string,string>[] = [];
-  for (let i=1;i<lines.length;i++) {
+  const out: Record<string, string>[] = [];
+  for (let i = 1; i < lines.length; i++) {
     const cols = splitCSVLine(lines[i]);
-    if (cols.length === 1 && cols[0].trim()==='') continue;
-    const rec: Record<string,string> = {};
-    header.forEach((h,idx)=>{ rec[h.trim()] = cols[idx] ?? ''; });
+    if (cols.length === 1 && cols[0].trim() === '') continue;
+    const rec: Record<string, string> = {};
+    header.forEach((h, idx) => {
+      rec[h.trim()] = cols[idx] ?? '';
+    });
     out.push(rec);
   }
   return out;
 }
 
 const DELIM = ';';
+
 function splitCSVLine(line: string): string[] {
   const result: string[] = [];
   let cur = '';
   let inQuotes = false;
-  for (let i=0;i<line.length;i++) {
+  for (let i = 0; i < line.length; i++) {
     const ch = line[i];
     if (ch === '"') {
-      if (inQuotes && line[i+1] === '"') { // escaped quote
+      if (inQuotes && line[i + 1] === '"') { // escaped quote
         cur += '"';
         i++; // skip next
       } else {
@@ -102,5 +105,5 @@ function splitCSVLine(line: string): string[] {
     cur += ch;
   }
   result.push(cur);
-  return result.map(c=>c.trim());
+  return result.map(c => c.trim());
 }

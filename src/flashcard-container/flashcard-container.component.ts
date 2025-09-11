@@ -67,10 +67,12 @@ export class FlashcardContainerComponent implements OnChanges {
     this.flipped.set(false);
 
     // Neue Karte vorbereitet (rechts, opacity 0, keine Transition)
-    this.cardEnterPhase.set('init');
-
-    // Slide Animation starten
-    this.startCardTransition();
+    if (this.frontPrimary !== this.oldFrontPrimary && this.frontPrimary !== this.oldBackPrimary) {
+      // Neue Karte komplett anders (nicht nur gedreht)
+      this.cardEnterPhase.set('init');
+      // Slide Animation starten
+      this.startCardTransition();
+    }
   }
 
   private startCardTransition() {

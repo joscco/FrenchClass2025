@@ -1,7 +1,7 @@
 <div class="relative max-w-[400px] w-full h-full">
   <!-- Alte Karte (Snapshot) verlässt: Richtung abhängig von getDirection() -->
   @if (getPhase() !== 'idle') {
-    <div class="absolute inset-0 z-0 transition-all duration-500 ease-out will-change-transform pointer-events-none h-full"
+    <div class="absolute inset-0 z-0 transition-all duration-300 ease-in will-change-transform pointer-events-none h-full"
          [ngClass]="[
            getPhase() === 'leaving' ? 'translate-x-0 opacity-100' : '',
            (getPhase() === 'entering' && getDirection() === 'next') ? '-translate-x-[150px] opacity-0' : '',
@@ -31,7 +31,8 @@
        ]"
        [class.transition-none]="getEnterPhase() === 'init'"
        [class.transition-all]="getEnterPhase() === 'animating'"
-       [class.duration-500]="getEnterPhase() === 'animating'"
+       [class.delay-150]="getEnterPhase() === 'animating'"
+       [class.duration-300]="getEnterPhase() === 'animating'"
        [class.ease-out]="getEnterPhase() === 'animating'"
        (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
        (click)="toggle(); $event.stopPropagation()">
