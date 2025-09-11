@@ -1,0 +1,14 @@
+<div class="absolute left-[20px] grid place-content-center gap-2 p-4 transition-opacity duration-300"
+     [class.opacity-100]="visible"
+     [class.opacity-0]="!visible"
+     [class.pointer-events-none]="!visible">
+  <div class="flex flex-row items-baseline">
+    <div class="text-xl font-semibold">{{ primary }}</div>
+    @if (genus) {
+      <div class="text-base italic opacity-50 ml-2">{{ genus }}</div>
+    }
+  </div>
+  @if (secondary) {
+    <div>{{ secondary }}</div>
+  }
+</div>

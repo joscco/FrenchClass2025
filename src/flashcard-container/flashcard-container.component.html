@@ -1,0 +1,52 @@
+<div class="relative max-w-[400px] w-full">
+  <!-- Alte Karte (Snapshot) verlässt: Richtung abhängig von getDirection() -->
+  @if (getPhase() !== 'idle') {
+    <div class="absolute inset-0 z-0 transition-all duration-500 ease-out will-change-transform pointer-events-none"
+         [ngClass]="[
+           getPhase() === 'leaving' ? 'translate-x-0 opacity-100' : '',
+           (getPhase() === 'entering' && getDirection() === 'next') ? '-translate-x-[150px] opacity-0' : '',
+           (getPhase() === 'entering' && getDirection() === 'prev') ? 'translate-x-[150px] opacity-0' : ''
+         ]">
+      <app-flashcard-card
+        [meta]="oldMeta"
+        [frontPrimary]="oldFrontPrimary"
+        [frontSecondary]="oldFrontExampleSentence"
+        [backPrimary]="oldBackPrimary"
+        [backSecondary]="oldBackExampleSentence"
+        [frontLang]="oldFrontLang"
+        [backLang]="oldBackLang"
+        [flipped]="oldWasFlipped"
+        [hovered]="false"
+        [interactive]="false"
+      />
+    </div>
+  }
+
+  <!-- Aktuelle Karte fährt ein: Richtung abhängig von getDirection() -->
+  <div class="relative overflow-hidden will-change-transform z-10"
+       [ngClass]="[
+         (getEnterPhase() === 'init' && getDirection() === 'next') ? 'translate-x-[150px] opacity-0' : '',
+         (getEnterPhase() === 'init' && getDirection() === 'prev') ? '-translate-x-[150px] opacity-0' : '',
+         (getEnterPhase() !== 'init') ? 'translate-x-0 opacity-100' : ''
+       ]"
+       [class.transition-none]="getEnterPhase() === 'init'"
+       [class.transition-all]="getEnterPhase() === 'animating'"
+       [class.duration-500]="getEnterPhase() === 'animating'"
+       [class.ease-out]="getEnterPhase() === 'animating'"
+       (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
+       (click)="toggle(); $event.stopPropagation()">
+
+    <app-flashcard-card
+      [meta]="meta"
+      [frontPrimary]="frontPrimary"
+      [frontSecondary]="frontExampleSentence"
+      [backPrimary]="backPrimary"
+      [backSecondary]="backExampleSentence"
+      [frontLang]="frontLang"
+      [backLang]="backLang"
+      [flipped]="isFlipped()"
+      [hovered]="isHovered()"
+      [interactive]="true"
+    />
+  </div>
+</div>

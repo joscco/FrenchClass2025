@@ -3,14 +3,15 @@ import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {FlashcardCardComponent} from '../flashcard/flashcard-card.component';
 
 @Component({
-  selector: 'app-flashcard',
+  selector: 'app-flashcard-container',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
-  templateUrl: './flashcard.component.html',
+  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, FlashcardCardComponent],
+  templateUrl: './flashcard-container.component.html',
 })
-export class FlashcardComponent implements OnChanges {
+export class FlashcardContainerComponent implements OnChanges {
   @Input() meta: Record<string, any> = {};
   @Input() frontPrimary = '';
   @Input() frontExampleSentence = '';
@@ -18,6 +19,8 @@ export class FlashcardComponent implements OnChanges {
   @Input() backExampleSentence = '';
   @Input() frontLang: 'fr' | 'de' = 'fr';
   @Input() backLang: 'fr' | 'de' = 'de';
+  // Neue Richtung der Navigation
+  @Input() direction: 'next' | 'prev' = 'next';
 
   flipped = signal(false);
   hovered = signal(false);
@@ -28,6 +31,8 @@ export class FlashcardComponent implements OnChanges {
   oldFrontExampleSentence = '';
   oldBackPrimary = '';
   oldBackExampleSentence = '';
+  oldFrontLang: 'fr' | 'de' = 'fr';
+  oldBackLang: 'fr' | 'de' = 'de';
   oldWasFlipped = false;
 
   // Karten-Phasen für Slide: leaving => entering => idle
@@ -36,8 +41,15 @@ export class FlashcardComponent implements OnChanges {
   // Neue Phase für Eintritt (erst ohne Transition positionieren, dann animieren)
   cardEnterPhase = signal<'idle' | 'init' | 'animating'>('idle');
 
+  // Getter für Template
+  getPhase(): 'idle' | 'leaving' | 'entering' { return this.cardPhase(); }
+  getEnterPhase(): 'idle' | 'init' | 'animating' { return this.cardEnterPhase(); }
+  isFlipped(): boolean { return this.flipped(); }
+  isHovered(): boolean { return this.hovered(); }
+  getDirection(): 'next' | 'prev' { return this.direction; }
+
   ngOnChanges(changes: SimpleChanges) {
-    const watched = ['frontPrimary', 'frontExampleSentence', 'backPrimary', 'backExampleSentence', 'meta'];
+    const watched = ['frontPrimary', 'frontExampleSentence', 'backPrimary', 'backExampleSentence', 'frontLang', 'backLang', 'meta'];
     const relevant = watched.some(k => k in changes && !changes[k]!.firstChange);
     if (!relevant) return;
 
@@ -47,6 +59,8 @@ export class FlashcardComponent implements OnChanges {
     this.oldFrontExampleSentence = changes['frontExampleSentence']?.previousValue ?? this.oldFrontExampleSentence;
     this.oldBackPrimary = changes['backPrimary']?.previousValue ?? this.oldBackPrimary;
     this.oldBackExampleSentence = changes['backExampleSentence']?.previousValue ?? this.oldBackExampleSentence;
+    this.oldFrontLang = changes['frontLang']?.previousValue ?? this.oldFrontLang;
+    this.oldBackLang = changes['backLang']?.previousValue ?? this.oldBackLang;
     this.oldWasFlipped = this.flipped();
 
     // Neue Karte startet immer Vorderseite
@@ -70,7 +84,7 @@ export class FlashcardComponent implements OnChanges {
         this.cardEnterPhase.set('animating');
       }
     });
-    // Ende nach 300ms
+    // Ende nach 500ms
     this.cardPhaseTimeout = setTimeout(() => {
       this.cardPhase.set('idle');
       this.cardEnterPhase.set('idle');

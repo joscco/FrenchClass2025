@@ -1,22 +1,25 @@
-<section *ngIf="cards?.length; else empty">
-  <div class="flex items-center justify-center gap-3 mb-3">
-    <button mat-stroked-button (click)="prev()">Zurück</button>
-    <div class="min-w-[80px] text-center font-semibold">{{ index()+1 }} / {{ shuffled().length }}</div>
-    <button mat-stroked-button (click)="next()">Weiter</button>
-  </div>
+@if (cards.length) {
+  <section class="flex flex-col items-center gap-4">
+    <div class="flex items-center justify-center gap-3 mb-3">
+      <button mat-stroked-button (click)="prev()">Zurück</button>
+      <div class="min-w-[80px] text-center font-semibold">
+        {{ index()+1 }} / {{ shuffled().length }}
+      </div>
+      <button mat-stroked-button (click)="next()">Weiter</button>
+    </div>
 
-  <app-flashcard
-    #fc
-    [meta]="current().meta || {}"
-    [frontPrimary]="current().frontPrimary"
-    [frontExampleSentence]="current().frontSecondary || ''"
-    [backPrimary]="current().backPrimary"
-    [backExampleSentence]="current().backSecondary || ''"
-    [frontLang]="current().frontLang || 'fr'"
-    [backLang]="current().backLang || 'de'"
-  />
-</section>
-
-<ng-template #empty>
+    <app-flashcard-container
+      #fc
+      [direction]="navDirection()"
+      [meta]="current().meta || {}"
+      [frontPrimary]="current().frontPrimary"
+      [frontExampleSentence]="current().frontSecondary || ''"
+      [backPrimary]="current().backPrimary"
+      [backExampleSentence]="current().backSecondary || ''"
+      [frontLang]="current().frontLang || 'fr'"
+      [backLang]="current().backLang || 'de'"
+    ></app-flashcard-container>
+  </section>
+} @else {
   <p>Keine Karten in dieser Auswahl.</p>
-</ng-template>
+}

@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { FlashcardComponent } from '../flashcard/flashcard.component';
 import { PracticeMode } from '../mode-selector/mode-selector.component';
+import {FlashcardContainerComponent} from '../flashcard-container/flashcard-container.component';
 
 export interface PracticeCard {
   id: number | string;
@@ -18,18 +18,19 @@ export interface PracticeCard {
 @Component({
   selector: 'app-practice',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FlashcardComponent],
+  imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent],
   templateUrl: './practice.component.html'
 })
 export class PracticeComponent implements OnChanges {
   @Input() cards: PracticeCard[] = [];
   @Input() mode: PracticeMode = 'fr-de';
 
-  @ViewChild('fc') flashcard?: FlashcardComponent;
+  @ViewChild('fc') flashcard?: FlashcardContainerComponent;
 
   index = signal(0);
   shuffled = signal<PracticeCard[]>([]);
   oriented = signal<PracticeCard[]>([]);
+  navDirection = signal<'next' | 'prev'>('next');
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cards'] || changes['mode']) {
@@ -57,8 +58,16 @@ export class PracticeComponent implements OnChanges {
     };
   }
 
-  prev() { this.index.update(i => Math.max(0, i - 1)); this.flashcard?.reset(); }
-  next() { this.index.update(i => Math.min(this.oriented().length - 1, i + 1)); this.flashcard?.reset(); }
+  prev() {
+    this.navDirection.set('prev');
+    this.index.update(i => Math.max(0, i - 1));
+    this.flashcard?.reset();
+  }
+  next() {
+    this.navDirection.set('next');
+    this.index.update(i => Math.min(this.oriented().length - 1, i + 1));
+    this.flashcard?.reset();
+  }
 
   private orientCard(card: PracticeCard, mode: PracticeMode): PracticeCard {
     const base: PracticeCard = { ...card, frontLang: 'fr', backLang: 'de' };
