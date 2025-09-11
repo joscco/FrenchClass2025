@@ -11,6 +11,8 @@ export interface PracticeCard {
   backPrimary: string;
   backSecondary?: string;
   meta?: { category?: string; genus?: string; lesson?: number };
+  frontLang?: 'fr' | 'de';
+  backLang?: 'fr' | 'de';
 }
 
 @Component({
@@ -51,7 +53,7 @@ export class PracticeComponent implements OnChanges {
     const a = this.oriented();
     const i = this.index();
     return a[Math.min(Math.max(0, i), Math.max(0, a.length - 1))] ?? {
-      id: 'empty', frontPrimary: '', backPrimary: ''
+      id: 'empty', frontPrimary: '', backPrimary: '', frontLang: 'fr', backLang: 'de'
     };
   }
 
@@ -59,19 +61,14 @@ export class PracticeComponent implements OnChanges {
   next() { this.index.update(i => Math.min(this.oriented().length - 1, i + 1)); this.flashcard?.reset(); }
 
   private orientCard(card: PracticeCard, mode: PracticeMode): PracticeCard {
-    if (mode === 'fr-de') return card;
+    const base: PracticeCard = { ...card, frontLang: 'fr', backLang: 'de' };
+    if (mode === 'fr-de') return base;
     if (mode === 'de-fr') {
-      return {
-        ...card,
-        frontPrimary: card.backPrimary,
-        frontSecondary: card.backSecondary,
-        backPrimary: card.frontPrimary,
-        backSecondary: card.frontSecondary
-      };
+      return { ...card, frontPrimary: card.backPrimary, frontSecondary: card.backSecondary, backPrimary: card.frontPrimary, backSecondary: card.frontSecondary, frontLang: 'de', backLang: 'fr' };
     }
-    // mixed: 50/50 zufällig
+    // mixed
     const frFirst = Math.random() < 0.5;
-    return frFirst ? card : this.orientCard(card, 'de-fr');
+    return frFirst ? base : { ...card, frontPrimary: card.backPrimary, frontSecondary: card.backSecondary, backPrimary: card.frontPrimary, backSecondary: card.frontSecondary, frontLang: 'de', backLang: 'fr' };
   }
 
   private shuffleInPlace<T>(a: T[]) {
@@ -81,4 +78,3 @@ export class PracticeComponent implements OnChanges {
     }
   }
 }
-

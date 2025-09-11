@@ -9,13 +9,14 @@
     #fc
     [meta]="current().meta || {}"
     [frontPrimary]="current().frontPrimary"
-    [frontSecondary]="current().frontSecondary || ''"
+    [frontExampleSentence]="current().frontSecondary || ''"
     [backPrimary]="current().backPrimary"
-    [backSecondary]="current().backSecondary || ''"
+    [backExampleSentence]="current().backSecondary || ''"
+    [frontLang]="current().frontLang || 'fr'"
+    [backLang]="current().backLang || 'de'"
   />
 </section>
 
 <ng-template #empty>
   <p>Keine Karten in dieser Auswahl.</p>
 </ng-template>
-

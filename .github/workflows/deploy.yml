@@ -1,0 +1,23 @@
+name: Deploy to Github Pages
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Create Node Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - name: Prepare and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run ng -- deploy --base-href=/ --name="Joscco" --email=jomitz96@hotmail.com

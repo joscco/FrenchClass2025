@@ -1,29 +1,47 @@
-<mat-card class="relative overflow-hidden">
-  <mat-card-header class="italic opacity-50">
-    <div *ngIf="meta && meta['category']">{{ meta['category'] }}</div>
-  </mat-card-header>
+<mat-card class="relative overflow-hidden" (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
+          (click)="toggle(); $event.stopPropagation()">
+  <div class="flex flex-row items-center justify-between w-full px-6 pt-4">
+    <div *ngIf="meta && meta['category']" class="italic opacity-50">{{ meta['category'] }}</div>
+
+    <div class="flex items-center text-sm italic opacity-50 transition-all duration-300 ease-out"
+         [class.opacity-100]="hovered()">
+      <mat-icon>swap_horiz</mat-icon>
+      <span class="ml-2">Click to flip</span>
+    </div>
+  </div>
+
+
   <mat-card-content>
-    <div class="relative min-w-[400px] min-h-[180px] p-4 cursor-pointer select-none" (click)="toggle()">
+    <div class="relative min-w-[400px] min-h-[180px] p-4 cursor-pointer select-none">
       <!-- Front -->
-      <div class="absolute inset-0 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
-           [class.opacity-100]="!flipped()"
-           [class.opacity-0]="flipped()"  [class.pointer-events-none]="flipped()">
-        <div class="text-xl font-semibold">{{ frontPrimary }}</div>
-        <div *ngIf="frontSecondary">{{ frontSecondary }}</div>
+      <div
+        class="absolute left-0 top-1/2 -translate-y-1/2 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
+        [class.opacity-100]="!flipped()"
+        [class.opacity-0]="flipped()" [class.pointer-events-none]="flipped()">
+        <div class="flex flex-row items-baseline">
+          <div class="text-xl font-semibold">{{ frontPrimary }}</div>
+          <div class="text-base italic opacity-50 ml-2">{{ meta["genus"]}}</div>
+        </div>
+        <div *ngIf="frontExampleSentence">{{ frontExampleSentence }}</div>
       </div>
       <!-- Back -->
-      <div class="absolute inset-0 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
-           [class.opacity-0]="!flipped()" [class.pointer-events-none]="!flipped()"
-           [class.opacity-100]="flipped()" >
+      <div
+        class="absolute left-0 top-1/2 -translate-y-1/2 grid place-content-center gap-2 p-4 transition-all duration-300 ease-out will-change-transform"
+        [class.opacity-0]="!flipped()" [class.pointer-events-none]="!flipped()"
+        [class.opacity-100]="flipped()">
         <div class="text-xl font-semibold">{{ backPrimary }}</div>
-        <div *ngIf="backSecondary">{{ backSecondary }}</div>
+        <div *ngIf="backExampleSentence">{{ backExampleSentence }}</div>
       </div>
     </div>
   </mat-card-content>
+
+  <div class="flex flex-row items-center justify-between w-full px-6 pb-4">
+    <div class="flex flex-row items-center text-sm gap-2 opacity-50 select-none pointer-events-none" aria-hidden="true">
+      <mat-icon>
+        {{ currentLang() === 'fr' ? 'wine_bar' : 'sports_bar' }}
+      </mat-icon>
+      <span>{{ currentLang() === 'fr' ? 'Französisch' : 'Deutsch' }}</span>
+    </div>
+  </div>
+
 </mat-card>
-<mat-card-actions>
-  <button mat-button (click)="toggle(); $event.stopPropagation()" class="transition-colors">
-    <mat-icon>swap_horiz</mat-icon>
-    <span class="ml-2">Flip</span>
-  </button>
-</mat-card-actions>
