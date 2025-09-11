@@ -1,14 +1,7 @@
 @if (cards.length) {
-  <section class="flex flex-col items-center gap-4">
-    <div class="flex items-center justify-center gap-3 mb-3">
-      <button mat-stroked-button (click)="prev()">Zurück</button>
-      <div class="min-w-[80px] text-center font-semibold">
-        {{ index()+1 }} / {{ shuffled().length }}
-      </div>
-      <button mat-stroked-button (click)="next()">Weiter</button>
-    </div>
-
+  <section class="flex flex-col items-center gap-6 h-full w-full">
     <app-flashcard-container
+      class="block w-full h-full"
       #fc
       [direction]="navDirection()"
       [meta]="current().meta || {}"
@@ -19,6 +12,13 @@
       [frontLang]="current().frontLang || 'fr'"
       [backLang]="current().backLang || 'de'"
     ></app-flashcard-container>
+    <div class="flex items-center justify-center gap-3 mb-3">
+      <button mat-stroked-button (click)="prev()">Zurück</button>
+      <div class="min-w-[80px] text-center font-semibold">
+        {{ index() + 1 }} / {{ shuffled().length }}
+      </div>
+      <button mat-stroked-button (click)="next()">Weiter</button>
+    </div>
   </section>
 } @else {
   <p>Keine Karten in dieser Auswahl.</p>

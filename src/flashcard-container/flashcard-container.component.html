@@ -1,7 +1,7 @@
-<div class="relative max-w-[400px] w-full">
+<div class="relative max-w-[400px] w-full h-full">
   <!-- Alte Karte (Snapshot) verlässt: Richtung abhängig von getDirection() -->
   @if (getPhase() !== 'idle') {
-    <div class="absolute inset-0 z-0 transition-all duration-500 ease-out will-change-transform pointer-events-none"
+    <div class="absolute inset-0 z-0 transition-all duration-500 ease-out will-change-transform pointer-events-none h-full"
          [ngClass]="[
            getPhase() === 'leaving' ? 'translate-x-0 opacity-100' : '',
            (getPhase() === 'entering' && getDirection() === 'next') ? '-translate-x-[150px] opacity-0' : '',
@@ -23,7 +23,7 @@
   }
 
   <!-- Aktuelle Karte fährt ein: Richtung abhängig von getDirection() -->
-  <div class="relative overflow-hidden will-change-transform z-10"
+  <div class="relative overflow-hidden will-change-transform z-10 h-full"
        [ngClass]="[
          (getEnterPhase() === 'init' && getDirection() === 'next') ? 'translate-x-[150px] opacity-0' : '',
          (getEnterPhase() === 'init' && getDirection() === 'prev') ? '-translate-x-[150px] opacity-0' : '',

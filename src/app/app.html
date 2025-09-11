@@ -1,8 +1,6 @@
 @if (!loading()) {
-  <div class="flex flex-col items-center max-w-[960px] gap-4 p-4">
-    <header class="flex flex-col gap-3 items-start">
-      <h1>Vokabeltrainer</h1>
-      <div class="controls flex flex-wrap gap-6 items-center justify-center">
+  <div class="flex flex-col items-center h-full max-w-[960px] p-10">
+    <header class="self-center flex flex-col gap-3 items-center">
         <app-lesson-selector
           [lessons]="lessons()"
           [selected]="selectedLessons()"
@@ -12,10 +10,9 @@
           [mode]="mode()"
           (modeChange)="mode.set($event)"
         />
-      </div>
     </header>
 
-    <main class="mt-4">
+    <main class="mt-8 grow">
       <app-practice
         [cards]="practiceCards()"
         [mode]="mode()"

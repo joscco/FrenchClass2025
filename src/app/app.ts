@@ -20,7 +20,8 @@ export interface VocabRow {
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, LessonSelectorComponent, ModeSelectorComponent, PracticeComponent],
-  templateUrl: './app.html'
+  templateUrl: './app.html',
+  host: {'class': 'h-full'},
 })
 export class AppComponent {
   private vocab = inject(VocabService);
