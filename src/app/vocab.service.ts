@@ -21,15 +21,14 @@ export class VocabService {
     if (this.loaded) return;
     this.loaded = true;
     try {
-      // Erwartet: /lessons/index.json -> ["1.csv","2.csv",...]
-      const indexResp = await fetch('/lessons/index.json');
+      const indexResp = await fetch('./lessons/index.json');
       if (!indexResp.ok) throw new Error('index.json fehlgeschlagen');
       const files: string[] = await indexResp.json();
       const all: VocabRow[] = [];
       for (const file of files) {
         try {
           const lessonNumber = parseInt(file.replace(/[^0-9]/g,''), 10) || 0;
-          const res = await fetch(`/lessons/${file}`);
+          const res = await fetch(`./lessons/${file}`);
           if (!res.ok) throw new Error(`Fehler beim Laden ${file}`);
           const text = await res.text();
           const records = parseCSV(text);
