@@ -25,72 +25,73 @@ export class FlashcardContainerComponent implements OnChanges {
   flipped = signal(false);
   hovered = signal(false);
 
-  // Snapshot komplette alte Karte
-  oldMeta: Record<string, any> = {};
-  oldFrontPrimary = '';
-  oldFrontExampleSentence = '';
-  oldBackPrimary = '';
-  oldBackExampleSentence = '';
-  oldFrontLang: 'fr' | 'de' = 'fr';
-  oldBackLang: 'fr' | 'de' = 'de';
-  oldWasFlipped = false;
+  // Animation-Phase für die Karte
+  transitionPhase = signal<'idle' | 'leaving' | 'entering' | 'hidden'>('idle');
+  private transitionTimeout: any;
 
-  // Karten-Phasen für Slide: leaving => entering => idle
-  cardPhase = signal<'idle' | 'leaving' | 'entering'>('idle');
-  private cardPhaseTimeout: any;
-  // Neue Phase für Eintritt (erst ohne Transition positionieren, dann animieren)
-  cardEnterPhase = signal<'idle' | 'init' | 'animating'>('idle');
+  // Interne Daten für die angezeigte Karte
+  private currentMeta: Record<string, any> = {};
+  private currentFrontPrimary = '';
+  private currentFrontExampleSentence = '';
+  private currentBackPrimary = '';
+  private currentBackExampleSentence = '';
+  private currentFrontLang: 'fr' | 'de' = 'fr';
+  private currentBackLang: 'fr' | 'de' = 'de';
 
   // Getter für Template
-  getPhase(): 'idle' | 'leaving' | 'entering' { return this.cardPhase(); }
-  getEnterPhase(): 'idle' | 'init' | 'animating' { return this.cardEnterPhase(); }
+  getMeta() { return this.currentMeta; }
+  getFrontPrimary() { return this.currentFrontPrimary; }
+  getFrontExampleSentence() { return this.currentFrontExampleSentence; }
+  getBackPrimary() { return this.currentBackPrimary; }
+  getBackExampleSentence() { return this.currentBackExampleSentence; }
+  getFrontLang() { return this.currentFrontLang; }
+  getBackLang() { return this.currentBackLang; }
+  getTransitionPhase() { return this.transitionPhase(); }
   isFlipped(): boolean { return this.flipped(); }
   isHovered(): boolean { return this.hovered(); }
-  getDirection(): 'next' | 'prev' { return this.direction; }
+
+  ngOnInit() {
+    // Initialdaten setzen
+    this.setCurrentCardData();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     const watched = ['frontPrimary', 'frontExampleSentence', 'backPrimary', 'backExampleSentence', 'frontLang', 'backLang', 'meta'];
     const relevant = watched.some(k => k in changes && !changes[k]!.firstChange);
     if (!relevant) return;
 
-    // Snapshot alte Karte
-    this.oldMeta = changes['meta']?.previousValue ?? this.oldMeta;
-    this.oldFrontPrimary = changes['frontPrimary']?.previousValue ?? this.oldFrontPrimary;
-    this.oldFrontExampleSentence = changes['frontExampleSentence']?.previousValue ?? this.oldFrontExampleSentence;
-    this.oldBackPrimary = changes['backPrimary']?.previousValue ?? this.oldBackPrimary;
-    this.oldBackExampleSentence = changes['backExampleSentence']?.previousValue ?? this.oldBackExampleSentence;
-    this.oldFrontLang = changes['frontLang']?.previousValue ?? this.oldFrontLang;
-    this.oldBackLang = changes['backLang']?.previousValue ?? this.oldBackLang;
-    this.oldWasFlipped = this.flipped();
+    // Kartenwechsel erkannt
+    this.startCardTransition();
+  }
 
-    // Neue Karte startet immer Vorderseite
-    this.flipped.set(false);
-
-    // Neue Karte vorbereitet (rechts, opacity 0, keine Transition)
-    if (this.frontPrimary !== this.oldFrontPrimary && this.frontPrimary !== this.oldBackPrimary) {
-      // Neue Karte komplett anders (nicht nur gedreht)
-      this.cardEnterPhase.set('init');
-      // Slide Animation starten
-      this.startCardTransition();
-    }
+  private setCurrentCardData() {
+    this.currentMeta = {...this.meta};
+    this.currentFrontPrimary = this.frontPrimary;
+    this.currentFrontExampleSentence = this.frontExampleSentence;
+    this.currentBackPrimary = this.backPrimary;
+    this.currentBackExampleSentence = this.backExampleSentence;
+    this.currentFrontLang = this.frontLang;
+    this.currentBackLang = this.backLang;
   }
 
   private startCardTransition() {
-    if (this.cardPhaseTimeout) clearTimeout(this.cardPhaseTimeout);
-    this.cardPhase.set('leaving');
-    // Nächster Frame -> entering Phase (beide Karten gleichzeitig animieren)
-    requestAnimationFrame(() => {
-      if (this.cardPhase() === 'leaving') {
-        this.cardPhase.set('entering');
-        // Ab jetzt Transition aktiv für neue Karte
-        this.cardEnterPhase.set('animating');
-      }
-    });
-    // Ende nach 500ms
-    this.cardPhaseTimeout = setTimeout(() => {
-      this.cardPhase.set('idle');
-      this.cardEnterPhase.set('idle');
-    }, 500); // Dauer 500ms passend zu duration-500
+    // Karte animiert raus
+    this.transitionPhase.set('leaving');
+    if (this.transitionTimeout) clearTimeout(this.transitionTimeout);
+    this.transitionTimeout = setTimeout(() => {
+      // Karte wird "gebeamed" (ohne Transition von links nach rechts)
+      this.transitionPhase.set('hidden');
+      // Daten aktualisieren
+      this.setCurrentCardData();
+      // Nächster Frame: Karte animiert rein
+      setTimeout(() => {
+        this.transitionPhase.set('entering');
+        this.transitionTimeout = setTimeout(() => {
+          // Animation beendet
+          this.transitionPhase.set('idle');
+        }, 300);
+      }, 10); // Minimaler Delay, damit DOM die hidden-Phase rendert
+    }, 300);
   }
 
   toggle() {

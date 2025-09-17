@@ -1,50 +1,29 @@
 <div class="relative max-w-[400px] w-full h-full">
-  <!-- Alte Karte (Snapshot) verlässt: Richtung abhängig von getDirection() -->
-  @if (getPhase() !== 'idle') {
-    <div class="absolute inset-0 z-0 transition-all duration-300 ease-in will-change-transform pointer-events-none h-full"
-         [ngClass]="[
-           getPhase() === 'leaving' ? 'translate-x-0 opacity-100' : '',
-           (getPhase() === 'entering' && getDirection() === 'next') ? '-translate-x-[150px] opacity-0' : '',
-           (getPhase() === 'entering' && getDirection() === 'prev') ? 'translate-x-[150px] opacity-0' : ''
-         ]">
-      <app-flashcard-card
-        [meta]="oldMeta"
-        [frontPrimary]="oldFrontPrimary"
-        [frontSecondary]="oldFrontExampleSentence"
-        [backPrimary]="oldBackPrimary"
-        [backSecondary]="oldBackExampleSentence"
-        [frontLang]="oldFrontLang"
-        [backLang]="oldBackLang"
-        [flipped]="oldWasFlipped"
-        [hovered]="false"
-        [interactive]="false"
-      />
-    </div>
-  }
-
-  <!-- Aktuelle Karte fährt ein: Richtung abhängig von getDirection() -->
-  <div class="relative overflow-hidden will-change-transform z-10 h-full"
-       [ngClass]="[
-         (getEnterPhase() === 'init' && getDirection() === 'next') ? 'translate-x-[150px] opacity-0' : '',
-         (getEnterPhase() === 'init' && getDirection() === 'prev') ? '-translate-x-[150px] opacity-0' : '',
-         (getEnterPhase() !== 'init') ? 'translate-x-0 opacity-100' : ''
-       ]"
-       [class.transition-none]="getEnterPhase() === 'init'"
-       [class.transition-all]="getEnterPhase() === 'animating'"
-       [class.delay-300]="getEnterPhase() === 'animating'"
-       [class.duration-300]="getEnterPhase() === 'animating'"
-       [class.ease-out]="getEnterPhase() === 'animating'"
-       (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
-       (click)="toggle(); $event.stopPropagation()">
-
+  <div
+    class="relative overflow-hidden will-change-transform z-10 h-full"
+    [ngClass]="[
+      getTransitionPhase() === 'leaving' && direction === 'next' ? '-translate-x-[100px] opacity-0' : '',
+      getTransitionPhase() === 'leaving' && direction === 'prev' ? 'translate-x-[100px] opacity-0' : '',
+      getTransitionPhase() === 'hidden' && direction === 'next' ? 'translate-x-[100px] opacity-0' : '',
+      getTransitionPhase() === 'hidden' && direction === 'prev' ? '-translate-x-[100px] opacity-0' : '',
+      getTransitionPhase() === 'entering' ? 'translate-x-0 opacity-100' : '',
+      getTransitionPhase() === 'idle' ? 'translate-x-0 opacity-100' : ''
+    ]"
+    [class.transition-all]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
+    [class.transition-none]="getTransitionPhase() === 'hidden'"
+    [class.duration-300]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
+    [class.ease-in-out]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
+    (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
+    (click)="toggle(); $event.stopPropagation()"
+  >
     <app-flashcard-card
-      [meta]="meta"
-      [frontPrimary]="frontPrimary"
-      [frontSecondary]="frontExampleSentence"
-      [backPrimary]="backPrimary"
-      [backSecondary]="backExampleSentence"
-      [frontLang]="frontLang"
-      [backLang]="backLang"
+      [meta]="getMeta()"
+      [frontPrimary]="getFrontPrimary()"
+      [frontSecondary]="getFrontExampleSentence()"
+      [backPrimary]="getBackPrimary()"
+      [backSecondary]="getBackExampleSentence()"
+      [frontLang]="getFrontLang()"
+      [backLang]="getBackLang()"
       [flipped]="isFlipped()"
       [hovered]="isHovered()"
       [interactive]="true"
