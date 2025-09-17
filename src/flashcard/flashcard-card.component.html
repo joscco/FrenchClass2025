@@ -15,13 +15,17 @@
       <app-card-face
         [primary]="frontPrimary"
         [secondary]="frontSecondary"
-        [genus]="frontLang === 'fr' && meta?.['genus']"
+        [lang]="frontLang"
+        [needsVowelArticle] = "frontLang === 'fr' && meta?.['fr_needs_vowel_article']"
+        [genus]="frontLang === 'fr' ? meta?.['fr_genus'] : meta?.['de_genus']"
         [visible]="!flipped"
       />
       <app-card-face
         [primary]="backPrimary"
         [secondary]="backSecondary"
-        [genus]="backLang === 'fr' && meta?.['genus']"
+        [lang]="backLang"
+        [needsVowelArticle] = "backLang === 'fr' && meta?.['fr_needs_vowel_article']"
+        [genus]="backLang === 'fr' ? meta?.['fr_genus'] : meta?.['de_genus']"
         [visible]="flipped"
       />
     </div>

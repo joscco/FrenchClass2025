@@ -10,7 +10,7 @@ export interface PracticeCard {
   frontSecondary?: string;
   backPrimary: string;
   backSecondary?: string;
-  meta?: { category?: string; genus?: string; lesson?: number };
+  meta?: { category?: string; fr_genus?: string; de_genus?: string, fr_needs_vowel_article: boolean, lesson?: number };
   frontLang?: 'fr' | 'de';
   backLang?: 'fr' | 'de';
 }

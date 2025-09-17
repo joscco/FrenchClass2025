@@ -5,17 +5,6 @@ import {ModeSelectorComponent, PracticeMode} from '../mode-selector/mode-selecto
 import {PracticeCard, PracticeComponent} from '../practice/practice.component';
 import {VocabService} from './vocab.service';
 
-export interface VocabRow {
-  date: number;
-  id: number;
-  category: 'verb' | 'noun' | 'adj' | 'expr' | string;
-  genus?: 'm.' | 'f.' | 'mpl.' | '';
-  fr_word: string;
-  fr_sentence?: string;
-  de_word: string;
-  de_sentence?: string;
-}
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -35,7 +24,7 @@ export class AppComponent {
   // Alle Lektionen aus geladenen Rows ableiten
   lessons = computed<LessonOption[]>(() => {
     const rows = this.vocab.rows();
-    const set = new Set(rows.map(r => r.date));
+    const set = new Set(rows.map(r => r.lesson));
     return ['Alle', ...Array.from(set).sort((a,b)=>a-b).map(n => `Lektion ${n}` as LessonOption)];
   });
 
@@ -48,14 +37,14 @@ export class AppComponent {
     return rows.filter(r => {
       if (sel === 'Alle') return true;
       const n = Number(sel.replace('Lektion ', ''));
-      return r.date === n;
+      return r.lesson === n;
     }).map<PracticeCard>(r => ({
       id: r.id,
       frontPrimary: r.fr_word,
       frontSecondary: r.fr_sentence ?? '',
       backPrimary: r.de_word,
       backSecondary: r.de_sentence ?? '',
-      meta: { category: r.category, genus: r.genus, lesson: r.date }
+      meta: { category: r.category, fr_genus: r.fr_genus, de_genus: r.de_genus, fr_needs_vowel_article: r.fr_needs_vowel_article, lesson: r.lesson }
     }));
   });
 

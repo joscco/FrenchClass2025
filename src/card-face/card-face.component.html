@@ -3,9 +3,12 @@
      [class.opacity-0]="!visible"
      [class.pointer-events-none]="!visible">
   <div class="flex flex-row items-baseline">
+    @if (getArticle() !== '') {
+      <div class="text-base opacity-50 mr-1"> {{ getArticle() }}</div>
+    }
     <div class="text-xl font-semibold">{{ primary }}</div>
-    @if (genus) {
-      <div class="text-base italic opacity-50 ml-2">{{ genus }}</div>
+    @if (needsVowelArticle || genus === 'm. pl.' || genus === 'f. pl.') {
+      <div class="text-base italic opacity-50 ml-2">{{ '(' + genus + ')' }}</div>
     }
   </div>
   @if (secondary) {

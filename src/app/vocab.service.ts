@@ -1,10 +1,12 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 
 export interface VocabRow {
-  date: number; // lesson number
+  lesson: number; // lesson number
   id: number;
   category: string;
-  genus?: string;
+  fr_genus?: string;
+  de_genus?: string;
+  fr_needs_vowel_article: boolean;
   fr_word: string;
   fr_sentence?: string;
   de_word: string;
@@ -35,10 +37,12 @@ export class VocabService {
           for (const r of records) {
             // Header: id;category;genus;fr_word;fr_sentence;de_word;de_sentence  (Semikolon getrennt)
             const row: VocabRow = {
-              date: ('date' in r && r['date']) ? Number(r['date']) : lessonNumber,
+              lesson: ('date' in r && r['date']) ? Number(r['date']) : lessonNumber,
               id: Number(r['id']),
               category: (r['category'] || '').trim(),
-              genus: (r['genus'] || '').trim() || undefined,
+              fr_genus: (r['fr_genus'] || '').trim() || undefined,
+              de_genus: (r['de_genus'] || '').trim() || undefined,
+              fr_needs_vowel_article: r['fr_needs_vowel_article']?.trim().toLowerCase() === 'true',
               fr_word: (r['fr_word'] || '').trim(),
               fr_sentence: (r['fr_sentence'] || '').trim() || undefined,
               de_word: (r['de_word'] || '').trim(),
