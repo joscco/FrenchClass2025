@@ -3,7 +3,7 @@
 2;2;verbe;vous étiez;;;Vous étiez en vacances quand je vous ai appelé.;ihr wart / Sie waren;;Ihr wart im Urlaub, als ich euch anrief.
 2;3;expression;en Croatie;;;Nous passons nos vacances en Croatie.;in Kroatien;;Wir verbringen unsere Ferien in Kroatien.
 2;4;nom;maison de vacances;f.;false;Nous louons une maison de vacances près de la mer.;Ferienhaus;n.;Wir mieten ein Ferienhaus am Meer.
-2;5;nom;attente;f.;false;Son attente d’une réponse rapide a été déçue.;Erwartung;f.;Seine Erwartung auf eine schnelle Antwort wurde enttäuscht.
+2;5;nom;attente;f.;true;Son attente d’une réponse rapide a été déçue.;Erwartung;f.;Seine Erwartung auf eine schnelle Antwort wurde enttäuscht.
 2;6;nom;réderie;f.;false;La réderie d’Amiens attire de nombreux visiteurs.;Trödelmarkt (Normandie);m.;Der Flohmarkt von Amiens zieht viele Besucher an.
 2;7;nom;braderie;f.;false;La braderie de Lille est très connue.;Trödelmarkt (Nordfrankreich);m.;Die Flohmarkt in Lille ist sehr bekannt.
 2;8;nom;chiffre d’affaires;m.;false;Le chiffre d’affaires a augmenté de 10 %.;Umsatz;m.;Der Umsatz ist um 10 % gestiegen.
@@ -25,15 +25,14 @@
 2;24;nom;porcelaine;f.;false;La porcelaine de Limoges est célèbre.;Porzellan;n.;Das Porzellan aus Limoges ist berühmt.
 2;25;verbe;polir;;;Il faut polir l’argenterie pour qu’elle brille.;polieren;;Man muss das Silber polieren, damit es glänzt.
 2;26;nom;lustre;m.;false;Un grand lustre éclaire la salle.;Kronleuchter;m.;Ein großer Kronleuchter erhellt den Saal.
-2;27;adjectif;insolent;;;insolent;frech, respektlos;;Cet enfant est insolent.
-2;28;nom;perte;f.;false;La perte de son portefeuille l’a beaucoup inquiété.;Verlust;s;Der Verlust seiner Brieftasche hat ihn sehr beunruhigt.
+2;27;adjectif;insolent;;;Cet enfant est insolent.;frech, respektlos;;Dieses Kind ist frech.
+2;28;nom;perte;f.;false;La perte de son portefeuille l’a beaucoup inquiété.;Verlust;m.;Der Verlust seiner Brieftasche hat ihn sehr beunruhigt.
 2;29;nom;début;m.;false;Le début du film est passionnant.;Anfang;m.;Der Anfang des Films ist spannend.
 2;30;nom;faïence;f.;false;La faïence de Delft est très réputée.;Steingut;n.;Die Delfter Steingut ist sehr berühmt.
 2;31;nom;vente aux enchères;f.;false;La vente aux enchères a eu lieu hier.;Auktion;f.;Die Auktion fand gestern statt.
 2;32;verbe;sauvegarder;;;Je dois sauvegarder mes fichiers.;speichern;;Ich muss meine Dateien speichern.
 2;33;nom;drap;m.;false;Les draps sont propres et frais.;Bettlaken;n.;Die Bettlaken sind sauber und frisch.
 2;34;verbe;marchander;;;Il aime marchander les prix au marché.;feilschen;;Er feilscht gern um die Preise auf dem Markt.
-2;35;adjectif;false;;;insolite;ungewöhnlich;;C’est un objet insolite.
 2;36;nom;cigogne;f.;false;Une cigogne a niché sur le toit.;Storch;m.;Ein Storch hat auf dem Dach genistet.
 2;37;verbe;faire la poussière;;;Je dois faire la poussière dans le salon.;Staub wischen;;Ich muss im Wohnzimmer Staub wischen.
 2;38;nom;mouchoir;m.;false;Il a sorti un mouchoir de sa poche.;Taschentuch;n.;Er zog ein Taschentuch aus seiner Tasche.
