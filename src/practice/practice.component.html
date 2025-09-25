@@ -13,11 +13,11 @@
       [backLang]="current().backLang || 'de'"
     ></app-flashcard-container>
     <div class="flex items-center justify-center gap-3 mb-3">
-      <button mat-stroked-button (click)="prev()">Zurück</button>
+      <button class="rounded-2xl border-2 hover:bg-neutral-400 p-3 transition-colors duration-150" (click)="prev()">Zurück</button>
       <div class="min-w-[80px] text-center font-semibold">
         {{ index() + 1 }} / {{ oriented().length }}
       </div>
-      <button mat-stroked-button (click)="next()">Weiter</button>
+      <button (click)="next()">Weiter</button>
     </div>
   </section>
 } @else {

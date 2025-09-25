@@ -1,18 +1,12 @@
 <div class="relative max-w-[400px] w-full h-full">
   <div
-    class="relative overflow-hidden will-change-transform h-full"
-    [ngClass]="[
-      getTransitionPhase() === 'leaving' && direction === 'next' ? '-translate-x-[100px] opacity-0' : '',
-      getTransitionPhase() === 'leaving' && direction === 'prev' ? 'translate-x-[100px] opacity-0' : '',
-      getTransitionPhase() === 'hidden' && direction === 'next' ? 'translate-x-[100px] opacity-0' : '',
-      getTransitionPhase() === 'hidden' && direction === 'prev' ? '-translate-x-[100px] opacity-0' : '',
-      getTransitionPhase() === 'entering' ? 'translate-x-0 opacity-100' : '',
-      getTransitionPhase() === 'idle' ? 'translate-x-0 opacity-100' : ''
-    ]"
-    [class.transition-all]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
-    [class.transition-none]="getTransitionPhase() === 'hidden'"
-    [class.duration-300]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
-    [class.ease-in-out]="getTransitionPhase() !== 'idle' && getTransitionPhase() !== 'hidden'"
+    class="relative overflow-hidden will-change-transform h-full transition-all duration-300 ease-in-out"
+    [class.translate-x-0]="!isTransitioning"
+    [class.opacity-100]="!isTransitioning"
+    [class.-translate-x-full]="isTransitioning && direction === 'next'"
+    [class.translate-x-full]="isTransitioning && direction === 'prev'"
+    [class.opacity-0]="isTransitioning"
+    (transitionend)="onTransitionEnd()"
     (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
     (click)="toggle(); $event.stopPropagation()"
   >

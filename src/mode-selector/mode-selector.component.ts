@@ -1,18 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { ModeToggleButtonComponent } from './mode-toggle-button.component';
 
 export type PracticeMode = 'fr-de' | 'de-fr' | 'mixed';
 
 @Component({
   selector: 'app-mode-selector',
   standalone: true,
-  imports: [CommonModule, MatButtonToggleModule, MatTooltipModule],
+  imports: [CommonModule, ModeToggleButtonComponent],
   templateUrl: './mode-selector.component.html'
 })
 export class ModeSelectorComponent {
   @Input() mode: PracticeMode = 'fr-de';
   @Output() modeChange = new EventEmitter<PracticeMode>();
-}
 
+  setMode(m: PracticeMode) {
+    if (m !== this.mode) {
+      this.mode = m;
+      this.modeChange.emit(this.mode);
+    }
+  }
+}

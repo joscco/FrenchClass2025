@@ -1,8 +1,20 @@
-<mat-button-toggle-group
-  [value]="mode"
-  (change)="modeChange.emit($event.value)">
-  <mat-button-toggle value="fr-de" matTooltip="Französisch → Deutsch">FR→DE</mat-button-toggle>
-  <mat-button-toggle value="de-fr" matTooltip="Deutsch → Französisch">DE→FR</mat-button-toggle>
-  <mat-button-toggle value="mixed" matTooltip="Gemischt">Mixed</mat-button-toggle>
-</mat-button-toggle-group>
-
+<div class="inline-flex rounded-lg shadow bg-gray-100 overflow-hidden">
+  <app-mode-toggle-button
+    [active]="mode === 'fr-de'"
+    (onClick)="setMode('fr-de')"
+    ariaLabel="Französisch → Deutsch"
+    title="Französisch → Deutsch"
+  >FR→DE</app-mode-toggle-button>
+  <app-mode-toggle-button
+    [active]="mode === 'de-fr'"
+    (onClick)="setMode('de-fr')"
+    ariaLabel="Deutsch → Französisch"
+    title="Deutsch → Französisch"
+  >DE→FR</app-mode-toggle-button>
+  <app-mode-toggle-button
+    [active]="mode === 'mixed'"
+    (onClick)="setMode('mixed')"
+    ariaLabel="Gemischt"
+    title="Gemischt"
+  >Mixed</app-mode-toggle-button>
+</div>

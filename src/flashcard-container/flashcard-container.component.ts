@@ -25,9 +25,7 @@ export class FlashcardContainerComponent implements OnChanges {
   flipped = signal(false);
   hovered = signal(false);
 
-  // Animation-Phase für die Karte
-  transitionPhase = signal<'idle' | 'leaving' | 'entering' | 'hidden'>('idle');
-  private transitionTimeout: any;
+  isTransitioning = false;
 
   // Interne Daten für die angezeigte Karte
   private currentMeta: Record<string, any> = {};
@@ -46,7 +44,6 @@ export class FlashcardContainerComponent implements OnChanges {
   getBackExampleSentence() { return this.currentBackExampleSentence; }
   getFrontLang() { return this.currentFrontLang; }
   getBackLang() { return this.currentBackLang; }
-  getTransitionPhase() { return this.transitionPhase(); }
   isFlipped(): boolean { return this.flipped(); }
   isHovered(): boolean { return this.hovered(); }
 
@@ -59,9 +56,16 @@ export class FlashcardContainerComponent implements OnChanges {
     const watched = ['frontPrimary', 'frontExampleSentence', 'backPrimary', 'backExampleSentence', 'frontLang', 'backLang', 'meta'];
     const relevant = watched.some(k => k in changes && !changes[k]!.firstChange);
     if (!relevant) return;
+    // Starte Animation
+    this.isTransitioning = true;
+  }
 
-    // Kartenwechsel erkannt
-    this.startCardTransition();
+  onTransitionEnd() {
+    if (this.isTransitioning) {
+      // Nach der Animation: Daten aktualisieren und Animation zurücksetzen
+      this.setCurrentCardData();
+      this.isTransitioning = false;
+    }
   }
 
   private setCurrentCardData() {
@@ -72,26 +76,6 @@ export class FlashcardContainerComponent implements OnChanges {
     this.currentBackExampleSentence = this.backExampleSentence;
     this.currentFrontLang = this.frontLang;
     this.currentBackLang = this.backLang;
-  }
-
-  private startCardTransition() {
-    // Karte animiert raus
-    this.transitionPhase.set('leaving');
-    if (this.transitionTimeout) clearTimeout(this.transitionTimeout);
-    this.transitionTimeout = setTimeout(() => {
-      // Karte wird "gebeamed" (ohne Transition von links nach rechts)
-      this.transitionPhase.set('hidden');
-      // Daten aktualisieren
-      this.setCurrentCardData();
-      // Nächster Frame: Karte animiert rein
-      setTimeout(() => {
-        this.transitionPhase.set('entering');
-        this.transitionTimeout = setTimeout(() => {
-          // Animation beendet
-          this.transitionPhase.set('idle');
-        }, 300);
-      }, 10); // Minimaler Delay, damit DOM die hidden-Phase rendert
-    }, 300);
   }
 
   toggle() {
