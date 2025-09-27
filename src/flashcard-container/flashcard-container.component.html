@@ -1,12 +1,7 @@
 <div class="relative max-w-[400px] w-full h-full">
   <div
-    class="relative overflow-hidden will-change-transform h-full transition-all duration-300 ease-in-out"
-    [class.translate-x-0]="!isTransitioning"
-    [class.opacity-100]="!isTransitioning"
-    [class.-translate-x-full]="isTransitioning && direction === 'next'"
-    [class.translate-x-full]="isTransitioning && direction === 'prev'"
-    [class.opacity-0]="isTransitioning"
-    (transitionend)="onTransitionEnd()"
+    #cardRef
+    class="relative overflow-hidden will-change-transform h-full"
     (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
     (click)="toggle(); $event.stopPropagation()"
   >

@@ -17,7 +17,7 @@
       <div class="min-w-[80px] text-center font-semibold">
         {{ index() + 1 }} / {{ oriented().length }}
       </div>
-      <button (click)="next()">Weiter</button>
+      <button class="rounded-2xl border-2 hover:bg-neutral-400 p-3 transition-colors duration-150" (click)="next()">Weiter</button>
     </div>
   </section>
 } @else {

@@ -11,7 +11,7 @@
   </div>
 
   <div class="grow flex flex-col items-center justify-center">
-    <div class="relative min-w-[360px] min-h-[160px] p-4 select-none" [ngClass]="{ 'cursor-pointer': interactive }">
+    <div class="relative min-w-[360px] min-h-[160px] select-none" [ngClass]="{ 'cursor-pointer': interactive }">
       <app-card-face
         [primary]="frontPrimary"
         [secondary]="frontSecondary"
@@ -33,19 +33,13 @@
 
   <div class="flex flex-row items-center justify-between w-full px-6 pb-6">
     <div class="relative flex items-center h-5 select-none text-sm opacity-60">
-      <div class="flex items-center gap-2 transition-opacity duration-300"
+      <div class="flex items-center gap-2 absolute left-0 transition-opacity duration-300"
            [class.opacity-100]="!flipped" [class.opacity-0]="flipped">
-        <mat-icon class="leading-none align-middle">
-          {{ frontLang === 'fr' ? 'wine_bar' : 'sports_bar' }}
-        </mat-icon>
-        <span>{{ frontLang === 'fr' ? 'Französisch' : 'Deutsch' }}</span>
+        <app-lang-indicator [lang]="frontLang"></app-lang-indicator>
       </div>
       <div class="flex items-center gap-2 absolute left-0 transition-opacity duration-300"
            [class.opacity-0]="!flipped" [class.opacity-100]="flipped">
-        <mat-icon class="leading-none align-middle">
-          {{ backLang === 'fr' ? 'wine_bar' : 'sports_bar' }}
-        </mat-icon>
-        <span>{{ backLang === 'fr' ? 'Französisch' : 'Deutsch' }}</span>
+        <app-lang-indicator [lang]="backLang"></app-lang-indicator>
       </div>
     </div>
   </div>
