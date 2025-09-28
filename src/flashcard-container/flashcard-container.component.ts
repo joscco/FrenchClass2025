@@ -7,7 +7,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  AfterViewInit, OnInit, SimpleChange
+  AfterViewInit, OnInit, SimpleChange, Output, EventEmitter
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
@@ -34,8 +34,18 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
 
   @ViewChild('cardRef', {static: true}) cardRef!: ElementRef<HTMLDivElement>;
 
+  @Output() next = new EventEmitter<void>();
+  @Output() prev = new EventEmitter<void>();
+
   flipped = signal(false);
   hovered = signal(false);
+
+  // Touch-Tracking
+  private touchStartX = 0;
+  private touchStartY = 0;
+  private touchEndX = 0;
+  private touchEndY = 0;
+  private touchActive = false;
 
   // Interne Daten für die angezeigte Karte
   private currentMeta: Record<string, any> = {};
@@ -85,6 +95,7 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   ngAfterViewInit() {
     if (this.cardRef) {
       gsap.set(this.cardRef.nativeElement, {x: 0, opacity: 1});
+      this.initTouchEvents();
     }
   }
 
@@ -101,7 +112,24 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   ngOnDestroy() {
     if (this.cardRef) {
       gsap.killTweensOf(this.cardRef.nativeElement);
+      this.removeTouchEvents();
     }
+  }
+
+  private initTouchEvents() {
+    // Touch-Events registrieren
+    const el = this.cardRef.nativeElement;
+    el.addEventListener('touchstart', this.onTouchStart, {passive: true});
+    el.addEventListener('touchmove', this.onTouchMove, {passive: true});
+    el.addEventListener('touchend', this.onTouchEnd);
+  }
+
+  private removeTouchEvents() {
+    // Touch-Events entfernen
+    const el = this.cardRef.nativeElement;
+    el.removeEventListener('touchstart', this.onTouchStart);
+    el.removeEventListener('touchmove', this.onTouchMove);
+    el.removeEventListener('touchend', this.onTouchEnd);
   }
 
   private setCurrentCardData() {
@@ -159,4 +187,41 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   resetFlip() {
     this.flipped.set(false);
   }
+
+  // Touch-Handler als Arrow-Functions, damit this korrekt ist
+  private onTouchStart = (e: TouchEvent) => {
+    if (e.touches.length !== 1) return;
+    this.touchActive = true;
+    this.touchStartX = e.touches[0].clientX;
+    this.touchStartY = e.touches[0].clientY;
+  };
+
+  private onTouchMove = (e: TouchEvent) => {
+    if (!this.touchActive || e.touches.length !== 1) return;
+    this.touchEndX = e.touches[0].clientX;
+    this.touchEndY = e.touches[0].clientY;
+  };
+
+  private onTouchEnd = (_e: TouchEvent) => {
+    if (!this.touchActive) return;
+    this.touchActive = false;
+    const dx = this.touchEndX - this.touchStartX;
+    const dy = this.touchEndY - this.touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+    const minDist = 40; // Mindestdistanz für Swipe
+    if (absDx > absDy && absDx > minDist) {
+      // Horizontaler Swipe
+      if (dx < 0) {
+        this.next.emit(); // Swipe links
+      } else {
+        this.prev.emit(); // Swipe rechts
+      }
+    } else if (absDy > absDx && absDy > minDist) {
+      // Vertikaler Swipe
+      this.toggle(); // Flip
+    }
+    // Reset
+    this.touchStartX = this.touchStartY = this.touchEndX = this.touchEndY = 0;
+  };
 }
