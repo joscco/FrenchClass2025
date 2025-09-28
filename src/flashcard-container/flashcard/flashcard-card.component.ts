@@ -23,9 +23,9 @@ export class FlashcardCardComponent implements OnChanges {
   @Input() flipDirection = 'up';
   @Input() hovered = false; // für Opacity der Flip-Hilfe
   @Input() interactive = true; // Cursor/Pointer
+  @Input() isTouchscreen!: boolean;
 
   @ViewChild('faceContainer', {static: false}) faceContainer?: ElementRef<HTMLDivElement>;
-
   public animating = false;
   public currentFace: Language = 'french';
 
