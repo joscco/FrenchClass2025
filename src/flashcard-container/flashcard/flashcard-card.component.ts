@@ -20,6 +20,7 @@ export class FlashcardCardComponent implements OnChanges {
   @Input() germanSecondary = '';
   @Input() frontLang: Language = 'french';
   @Input() flipped = false; // welches Face ist sichtbar
+  @Input() flipDirection = 'up';
   @Input() hovered = false; // für Opacity der Flip-Hilfe
   @Input() interactive = true; // Cursor/Pointer
 
@@ -58,7 +59,7 @@ export class FlashcardCardComponent implements OnChanges {
     const el = this.faceContainer.nativeElement;
     // Altes Face nach oben und opacity 0
     gsap.to(el, {
-      y: -40,
+      y: this.flipDirection === 'up' ? -40 : 40,
       opacity: 0,
       duration: 0.25,
       onComplete: () => {
@@ -67,7 +68,7 @@ export class FlashcardCardComponent implements OnChanges {
         // Neues Face von unten und opacity 0 auf 1
         gsap.fromTo(
           el,
-          {y: 40, opacity: 0},
+          {y: this.flipDirection === 'up' ? 40 : -40, opacity: 0},
           {
             y: 0,
             opacity: 1,
@@ -80,6 +81,4 @@ export class FlashcardCardComponent implements OnChanges {
       }
     });
   }
-
-  protected readonly reverseLanguage = reverseLanguage;
 }

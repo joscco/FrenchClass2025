@@ -4,6 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {PracticeMode} from '../mode-selector/mode-selector.component';
 import {FlashcardContainerComponent} from '../flashcard-container/flashcard-container.component';
 import {NavButtonComponent} from './nav-button/nav-button.component';
+import {MatIcon} from '@angular/material/icon';
 
 export type Language = 'french' | 'german';
 
@@ -24,7 +25,7 @@ export interface PracticeCard {
 @Component({
   selector: 'app-practice',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent, NavButtonComponent],
+  imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent, NavButtonComponent, MatIcon],
   templateUrl: './practice.component.html'
 })
 export class PracticeComponent implements OnInit, OnChanges {
@@ -36,6 +37,17 @@ export class PracticeComponent implements OnInit, OnChanges {
   index = signal(0);
   oriented = signal<PracticeCard[]>([]);
   navDirection = signal<'next' | 'prev'>('next');
+
+  isTouchScreen = false;
+
+  constructor() {
+    // Touchscreen-Erkennung
+    this.isTouchScreen =
+      (('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0) ||
+      // @ts-ignore
+      (navigator.msMaxTouchPoints > 0));
+  }
 
   ngOnInit() {
     this.index.set(0);

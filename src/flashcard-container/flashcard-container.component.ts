@@ -7,7 +7,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  AfterViewInit, OnInit, SimpleChange, Output, EventEmitter
+  AfterViewInit, OnInit, Output, EventEmitter
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
@@ -31,13 +31,14 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   @Input() germanExampleSentence = '';
   @Input() frontLang: Language = 'french';
   @Input() direction: 'next' | 'prev' = 'next';
+  @Input() isTouchScreen = false;
 
   @ViewChild('cardRef', {static: true}) cardRef!: ElementRef<HTMLDivElement>;
 
   @Output() next = new EventEmitter<void>();
   @Output() prev = new EventEmitter<void>();
 
-  flipped = signal(false);
+  flipped = signal<{ direction: 'up' | 'down', value: boolean }>({value: false, direction: 'up'});
   hovered = signal(false);
 
   // Touch-Tracking
@@ -81,7 +82,7 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   }
 
   isFlipped(): boolean {
-    return this.flipped();
+    return this.flipped().value;
   }
 
   isHovered(): boolean {
@@ -172,8 +173,13 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
     });
   }
 
-  toggle() {
-    this.flipped.update(v => !v);
+  toggle(direction: 'up' | 'down') {
+    this.flipped.update(v => ({value: !v.value, direction: direction}));
+  }
+
+  toggleOnClick() {
+    if (this.isTouchScreen) return; // kein Klick auf Touchscreens
+    this.toggle('up');
   }
 
   hoverOn() {
@@ -185,10 +191,10 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
   }
 
   resetFlip() {
-    this.flipped.set(false);
+    this.flipped.set({value: false, direction: 'up'});
   }
-
   // Touch-Handler als Arrow-Functions, damit this korrekt ist
+
   private onTouchStart = (e: TouchEvent) => {
     if (e.touches.length !== 1) return;
     this.touchActive = true;
@@ -219,7 +225,11 @@ export class FlashcardContainerComponent implements OnInit, OnChanges, AfterView
       }
     } else if (absDy > absDx && absDy > minDist) {
       // Vertikaler Swipe
-      this.toggle(); // Flip
+      if (dy < 0) {
+        this.toggle('up'); // Swipe hoch
+      } else {
+        this.toggle('down'); // Swipe runter
+      }
     }
     // Reset
     this.touchStartX = this.touchStartY = this.touchEndX = this.touchEndY = 0;

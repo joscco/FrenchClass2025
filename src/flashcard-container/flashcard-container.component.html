@@ -3,7 +3,7 @@
     #cardRef
     class="relative overflow-hidden will-change-transform h-full"
     (mouseenter)="hoverOn()" (mouseleave)="hoverOff()"
-    (click)="toggle(); $event.stopPropagation()"
+    (click)="toggleOnClick(); $event.stopPropagation()"
   >
     <app-flashcard-card
       [meta]="getMeta()"
@@ -13,6 +13,7 @@
       [germanSecondary]="getGermanExampleSentence()"
       [frontLang]="getFrontLang()"
       [flipped]="isFlipped()"
+      [flipDirection]="flipped().direction"
       [hovered]="isHovered()"
       [interactive]="true"
     />
