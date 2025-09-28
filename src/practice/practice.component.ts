@@ -3,22 +3,28 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {PracticeMode} from '../mode-selector/mode-selector.component';
 import {FlashcardContainerComponent} from '../flashcard-container/flashcard-container.component';
+import {NavButtonComponent} from './nav-button/nav-button.component';
+
+export type Language = 'french' | 'german';
+
+export function reverseLanguage(lang: Language): Language {
+  return lang === 'french' ? 'german' : 'french';
+}
 
 export interface PracticeCard {
   id: number | string;
-  frontPrimary: string;
-  frontSecondary?: string;
-  backPrimary: string;
-  backSecondary?: string;
+  frenchPrimary: string;
+  frenchSecondary?: string;
+  germanPrimary: string;
+  germanSecondary?: string;
   meta?: { category?: string; fr_genus?: string; de_genus?: string, fr_needs_vowel_article: boolean, lesson?: number };
-  frontLang?: 'fr' | 'de';
-  backLang?: 'fr' | 'de';
+  frontLanguage?: Language;
 }
 
 @Component({
   selector: 'app-practice',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent],
+  imports: [CommonModule, MatButtonModule, FlashcardContainerComponent, FlashcardContainerComponent, NavButtonComponent],
   templateUrl: './practice.component.html'
 })
 export class PracticeComponent implements OnInit, OnChanges {
@@ -33,66 +39,50 @@ export class PracticeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.index.set(0);
-    this.prepare();
+    this.prepareAndOrientCards();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cards'] || changes['mode']) {
-      this.prepare();
+      this.prepareAndOrientCards();
     }
   }
 
-  prepare() {
+  prepareAndOrientCards() {
     const arr = [...this.cards];
     const oriented = arr.map(c => this.orientCard(c, this.mode));
     this.oriented.set(oriented);
-    this.flashcard?.reset();
+    this.flashcard?.resetFlip();
   }
 
   current(): PracticeCard {
     const a = this.oriented();
     const i = this.index();
     return a[Math.min(Math.max(0, i), Math.max(0, a.length - 1))] ?? {
-      id: 'empty', frontPrimary: '', backPrimary: '', frontLang: 'fr', backLang: 'de'
+      id: 'empty', frenchPrimary: '', germanPrimary: '', frontLanguage: 'fr', backLang: 'de'
     };
   }
 
   prev() {
     this.navDirection.set('prev');
     this.index.update(i => Math.max(0, i - 1));
-    this.flashcard?.reset();
   }
 
   next() {
     this.navDirection.set('next');
     this.index.update(i => Math.min(this.oriented().length - 1, i + 1));
-    this.flashcard?.reset();
   }
 
   private orientCard(card: PracticeCard, mode: PracticeMode): PracticeCard {
-    const base: PracticeCard = {...card, frontLang: 'fr', backLang: 'de'};
-    if (mode === 'fr-de') return base;
-    if (mode === 'de-fr') {
-      return {
-        ...card,
-        frontPrimary: card.backPrimary,
-        frontSecondary: card.backSecondary,
-        backPrimary: card.frontPrimary,
-        backSecondary: card.frontSecondary,
-        frontLang: 'de',
-        backLang: 'fr'
-      };
+    if (mode === 'fr-de') {
+      return {...card, frontLanguage: 'french'};
     }
+    if (mode === 'de-fr') {
+      return {...card, frontLanguage: 'german'};
+    }
+
     // mixed
-    const frFirst = Math.random() < 0.5;
-    return frFirst ? base : {
-      ...card,
-      frontPrimary: card.backPrimary,
-      frontSecondary: card.backSecondary,
-      backPrimary: card.frontPrimary,
-      backSecondary: card.frontSecondary,
-      frontLang: 'de',
-      backLang: 'fr'
-    };
+    const frontLanguage = Math.random() < 0.5 ? 'french' : 'german';
+    return {...card, frontLanguage: frontLanguage};
   }
 }

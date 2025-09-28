@@ -7,14 +7,15 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  AfterViewInit
+  AfterViewInit, OnInit, SimpleChange
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {FlashcardCardComponent} from '../flashcard/flashcard-card.component';
+import {FlashcardCardComponent} from './flashcard/flashcard-card.component';
 import gsap from 'gsap';
+import {Language} from '../practice/practice.component';
 
 @Component({
   selector: 'app-flashcard-container',
@@ -22,14 +23,13 @@ import gsap from 'gsap';
   imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, FlashcardCardComponent],
   templateUrl: './flashcard-container.component.html',
 })
-export class FlashcardContainerComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class FlashcardContainerComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() meta: Record<string, any> = {};
-  @Input() frontPrimary = '';
-  @Input() frontExampleSentence = '';
-  @Input() backPrimary = '';
-  @Input() backExampleSentence = '';
-  @Input() frontLang: 'fr' | 'de' = 'fr';
-  @Input() backLang: 'fr' | 'de' = 'de';
+  @Input() frenchPrimary = '';
+  @Input() frenchExampleSentence = '';
+  @Input() germanPrimary = '';
+  @Input() germanExampleSentence = '';
+  @Input() frontLang: Language = 'french';
   @Input() direction: 'next' | 'prev' = 'next';
 
   @ViewChild('cardRef', {static: true}) cardRef!: ElementRef<HTMLDivElement>;
@@ -39,40 +39,35 @@ export class FlashcardContainerComponent implements OnChanges, AfterViewInit, On
 
   // Interne Daten für die angezeigte Karte
   private currentMeta: Record<string, any> = {};
-  private currentFrontPrimary = '';
-  private currentFrontExampleSentence = '';
-  private currentBackPrimary = '';
-  private currentBackExampleSentence = '';
-  private currentFrontLang: 'fr' | 'de' = 'fr';
-  private currentBackLang: 'fr' | 'de' = 'de';
+  private currentFrenchPrimary = '';
+  private currentFrenchExampleSentence = '';
+  private currentGermanPrimary = '';
+  private currentGermanExampleSentence = '';
+  private currentFrontLang: Language = 'french';
 
   // Getter für Template
   getMeta() {
     return this.currentMeta;
   }
 
-  getFrontPrimary() {
-    return this.currentFrontPrimary;
+  getFrenchPrimary() {
+    return this.currentFrenchPrimary;
   }
 
-  getFrontExampleSentence() {
-    return this.currentFrontExampleSentence;
+  getFrenchExampleSentence() {
+    return this.currentFrenchExampleSentence;
   }
 
-  getBackPrimary() {
-    return this.currentBackPrimary;
+  getGermanPrimary() {
+    return this.currentGermanPrimary;
   }
 
-  getBackExampleSentence() {
-    return this.currentBackExampleSentence;
+  getGermanExampleSentence() {
+    return this.currentGermanExampleSentence;
   }
 
   getFrontLang() {
     return this.currentFrontLang;
-  }
-
-  getBackLang() {
-    return this.currentBackLang;
   }
 
   isFlipped(): boolean {
@@ -94,11 +89,13 @@ export class FlashcardContainerComponent implements OnChanges, AfterViewInit, On
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const watched = ['frontPrimary', 'frontExampleSentence', 'backPrimary', 'backExampleSentence', 'frontLang', 'backLang', 'meta'];
+    const watched = ['frenchPrimary', 'germanPrimary'];
     const relevant = watched.some(k => k in changes && !changes[k]!.firstChange);
-    if (!relevant) return;
-
-    this.animateCardSwap();
+    if (relevant) {
+      this.animateCardSwap();
+    } else {
+      this.setCurrentCardData();
+    }
   }
 
   ngOnDestroy() {
@@ -109,12 +106,12 @@ export class FlashcardContainerComponent implements OnChanges, AfterViewInit, On
 
   private setCurrentCardData() {
     this.currentMeta = {...this.meta};
-    this.currentFrontPrimary = this.frontPrimary;
-    this.currentFrontExampleSentence = this.frontExampleSentence;
-    this.currentBackPrimary = this.backPrimary;
-    this.currentBackExampleSentence = this.backExampleSentence;
+    this.currentFrenchPrimary = this.frenchPrimary;
+    this.currentFrenchExampleSentence = this.frenchExampleSentence;
+    this.currentGermanPrimary = this.germanPrimary;
+    this.currentGermanExampleSentence = this.germanExampleSentence;
     this.currentFrontLang = this.frontLang;
-    this.currentBackLang = this.backLang;
+    this.resetFlip();
   }
 
   private animateCardSwap() {
@@ -159,7 +156,7 @@ export class FlashcardContainerComponent implements OnChanges, AfterViewInit, On
     this.hovered.set(false);
   }
 
-  reset() {
+  resetFlip() {
     this.flipped.set(false);
   }
 }

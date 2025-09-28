@@ -5,19 +5,18 @@
       #fc
       [direction]="navDirection()"
       [meta]="current().meta || {}"
-      [frontPrimary]="current().frontPrimary"
-      [frontExampleSentence]="current().frontSecondary || ''"
-      [backPrimary]="current().backPrimary"
-      [backExampleSentence]="current().backSecondary || ''"
-      [frontLang]="current().frontLang || 'fr'"
-      [backLang]="current().backLang || 'de'"
+      [frenchPrimary]="current().frenchPrimary"
+      [frenchExampleSentence]="current().frenchSecondary || ''"
+      [germanPrimary]="current().germanPrimary"
+      [germanExampleSentence]="current().germanSecondary || ''"
+      [frontLang]="current().frontLanguage || 'french'"
     ></app-flashcard-container>
     <div class="flex items-center justify-center gap-3 mb-3">
-      <button class="rounded-2xl border-2 hover:bg-neutral-400 p-3 transition-colors duration-150" (click)="prev()">Zurück</button>
+      <app-nav-button label="Zurück" (btnClick)="prev()"></app-nav-button>
       <div class="min-w-[80px] text-center font-semibold">
         {{ index() + 1 }} / {{ oriented().length }}
       </div>
-      <button class="rounded-2xl border-2 hover:bg-neutral-400 p-3 transition-colors duration-150" (click)="next()">Weiter</button>
+      <app-nav-button label="Weiter" (btnClick)="next()"></app-nav-button>
     </div>
   </section>
 } @else {

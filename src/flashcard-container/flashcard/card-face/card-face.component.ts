@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {Language} from '../../../practice/practice.component';
 
 @Component({
   selector: 'app-card-face',
@@ -11,12 +12,11 @@ export class CardFaceComponent {
   @Input() primary = '';
   @Input() secondary = '';
   @Input() genus?: string;
-  @Input() lang: 'fr' | 'de' = 'fr';
+  @Input() language: Language = 'french';
   @Input() needsVowelArticle = false;
-  @Input() visible = true;
 
   public getArticle(): string {
-    if (this.lang === 'de') {
+    if (this.language === 'german') {
       switch (this.genus) {
         case 'm.':
           return 'der';
@@ -28,7 +28,7 @@ export class CardFaceComponent {
           return '';
       }
     }
-    if (this.lang === 'fr') {
+    if (this.language === 'french') {
       if (this.needsVowelArticle) {
         return 'l\'';
       }

@@ -1,7 +1,5 @@
-<div class="absolute left-0 top-1/2 -translate-y-1/2 px-8 py-4 flex flex-col items-start justify-center gap-2 p-4 transition-opacity duration-300"
-     [class.opacity-100]="visible"
-     [class.opacity-0]="!visible"
-     [class.pointer-events-none]="!visible">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 px-8 py-4
+            flex flex-col items-start justify-center gap-2">
   <div class="flex flex-row items-baseline">
     @if (getArticle() !== '') {
       <div class="text-base opacity-50 mr-1"> {{ getArticle() }}</div>

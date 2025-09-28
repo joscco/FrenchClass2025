@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModeToggleButtonComponent } from './mode-toggle-button.component';
+import { ModeToggleButtonComponent } from './toggle-button/mode-toggle-button.component';
 
 export type PracticeMode = 'fr-de' | 'de-fr' | 'mixed';
 

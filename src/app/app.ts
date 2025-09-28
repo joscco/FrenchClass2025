@@ -40,10 +40,10 @@ export class AppComponent {
       return r.lesson === n;
     }).map<PracticeCard>(r => ({
       id: r.id,
-      frontPrimary: r.fr_word,
-      frontSecondary: r.fr_sentence ?? '',
-      backPrimary: r.de_word,
-      backSecondary: r.de_sentence ?? '',
+      frenchPrimary: r.fr_word,
+      frenchSecondary: r.fr_sentence ?? '',
+      germanPrimary: r.de_word,
+      germanSecondary: r.de_sentence ?? '',
       meta: { category: r.category, fr_genus: r.fr_genus, de_genus: r.de_genus, fr_needs_vowel_article: r.fr_needs_vowel_article, lesson: r.lesson }
     }));
   });
